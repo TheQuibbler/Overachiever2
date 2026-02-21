@@ -20,7 +20,7 @@ end
 
 -- Public API: Find achievements related to a Unit (NPC)
 -- Uses prebuilt DB lookup (no runtime scanning needed)
--- Format: each entry in DB is {achID, criteriaID}
+-- Format: each entry in DB is {achID, criteriaID, orderIndex}
 function ns.GetUnitAchievements(unit)
     local ok, guid = pcall(UnitGUID, unit)
     if not ok then return {} end
@@ -34,13 +34,17 @@ function ns.GetUnitAchievements(unit)
     local seen = {}
     local matches = {}
     for _, entry in ipairs(entries) do
-        local achID, criteriaID = entry[1], entry[2]
+        local achID, criteriaID, orderIndex = entry[1], entry[2], entry[3]
         if not seen[achID] then
             seen[achID] = true
             local _, achName, _, achCompleted = ns.GetAchievementInfo(achID)
             if achName then
                 -- Get criteria-specific completion via criteriaID
                 local criteriaString, _, critCompleted = GetAchievementCriteriaInfoByID(achID, criteriaID)
+                -- Fallback to orderIndex-based lookup for localized name
+                if (not criteriaString or criteriaString == "") and orderIndex then
+                    criteriaString = GetAchievementCriteriaInfo(achID, orderIndex)
+                end
                 table.insert(matches, {
                     achID = achID,
                     achName = achName,
