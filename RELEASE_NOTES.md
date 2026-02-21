@@ -8,6 +8,9 @@ Instead, if you are authoring a PR for the main branch, add your release note to
 
 [NEW_RELEASE_NOTES.md](./NEW_RELEASE_NOTES.md).
 
+## 0.1.2
+- Remove the `Debug` checkbox from the option.
+
 ## 0.1.1
 - First release
 
