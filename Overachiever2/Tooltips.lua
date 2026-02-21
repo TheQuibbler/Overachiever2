@@ -12,12 +12,13 @@ local COLOR_ID = CreateColorFromHexString(Utils.WhiteColor)
 
 -- Helper: Add a line with the achievement icon
 local function AddAchievementLine(tooltip, match)
-    local color = match.completed and COLOR_COMPLETE or COLOR_INCOMPLETE
-    local statusStr = match.completed and _G.CRITERIA_COMPLETED or _G.CRITERIA_NOT_COMPLETED
-    local name = match.name
+    local done = match.criteriaCompleted or match.completed
+    local color = done and COLOR_COMPLETE or COLOR_INCOMPLETE
+    local statusStr = done and _G.CRITERIA_COMPLETED or _G.CRITERIA_NOT_COMPLETED
+    local name = match.achName or match.name
 
     if Overachiever2_Settings.Debug then
-        name = name .. " [ID: " .. match.id .. "]"
+        name = name .. " [ID: " .. (match.achID or match.id) .. "]"
     end
 
     local r, g, b = color:GetRGB()

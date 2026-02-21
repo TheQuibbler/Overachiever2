@@ -10,6 +10,7 @@ Compat.lua
 Utils.lua
 Localization.lua
 Data.lua
+DB.lua
 Scanner.lua
 Options.lua
 Core.lua
