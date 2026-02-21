@@ -67,6 +67,10 @@ function Utils.AchievementIconText()
     return "|T" .. Utils.AchievementIconPath .. ":0|t"
 end
 
+function Utils.AchievementIconSpacer()
+    return "|T" .. Utils.AchievementIconPath .. ":0::::256:256:0:0:0:0|t"
+end
+
 function Utils.CheckAtlasText()
     return "|A:common-icon-checkmark:12:12|a"
 end

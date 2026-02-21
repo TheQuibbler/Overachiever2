@@ -12,17 +12,28 @@ local COLOR_ID = CreateColorFromHexString(Utils.WhiteColor)
 
 -- Helper: Add a line with the achievement icon
 local function AddAchievementLine(tooltip, match)
-    local done = match.criteriaCompleted or match.completed
-    local color = done and COLOR_COMPLETE or COLOR_INCOMPLETE
-    local statusStr = done and _G.CRITERIA_COMPLETED or _G.CRITERIA_NOT_COMPLETED
-    local name = match.achName or match.name
-
+    local achName = match.achName
+    local achStatusStr = match.achCompleted and _G.CRITERIA_COMPLETED or _G.CRITERIA_NOT_COMPLETED
+    local achColor = match.achCompleted and COLOR_COMPLETE or COLOR_INCOMPLETE
     if Overachiever2_Settings.Debug then
-        name = name .. " [ID: " .. (match.achID or match.id) .. "]"
+        achName = achName .. " [achID: " .. match.achID .. "]"
     end
+    local r, g, b = achColor:GetRGB()
+    tooltip:AddDoubleLine(Utils.AchievementIconText() .. " " .. achName, achStatusStr, r, g, b, r, g, b)
 
-    local r, g, b = color:GetRGB()
-    tooltip:AddDoubleLine(Utils.AchievementIconText() .. " " .. name, statusStr, r, g, b, r, g, b)
+    -- Some criteria return an empty string, so we need to handle that.
+    local critName = "???"
+    if match.criteriaString and match.criteriaString ~= "" then
+        critName = match.criteriaString
+    end
+    critName = Utils.AchievementIconSpacer() .. " " .. critName
+    local critStatusStr = match.criteriaCompleted and _G.CRITERIA_COMPLETED or _G.CRITERIA_NOT_COMPLETED
+    local critColor = match.criteriaCompleted and COLOR_COMPLETE or COLOR_INCOMPLETE
+    if Overachiever2_Settings.Debug then
+        critName = critName .. " [critID: " .. match.criteriaID .. "]"
+    end
+    r, g, b = critColor:GetRGB()
+    tooltip:AddDoubleLine(critName, critStatusStr, r, g, b, r, g, b)
 end
 
 -- Helper: Add all criteria lines for an achievement
