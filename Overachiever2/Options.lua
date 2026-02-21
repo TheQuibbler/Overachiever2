@@ -18,23 +18,11 @@ local function RegisterOptions()
     local category, layout = Settings.RegisterVerticalLayoutCategory("Overachiever2")
     Settings.RegisterAddOnCategory(category)
 
-    -- 1. Debug Mode Setting
-    local variable = "Debug"
-    local defaultValue = false
-
-    local setting = Settings.RegisterAddOnSetting(category, "Overachiever2_Debug", variable, Overachiever2_Settings, Settings.VarType.Boolean, ns.L["OPT_DEBUG_TITLE"], defaultValue)
-    Settings.CreateCheckbox(category, setting, ns.L["OPT_DEBUG_TITLE"], ns.L["OPT_DEBUG_DESC"])
-
     ns.OptionsCategory = category
 end
 
 function ns.ToggleDebugMode()
     Overachiever2_Settings.Debug = not Overachiever2_Settings.Debug
-    -- Sync with modern Settings UI if it's already registered
-    local setting = Settings.GetSetting("Overachiever2_Debug")
-    if setting then
-        setting:SetValue(Overachiever2_Settings.Debug)
-    end
     local msg = Overachiever2_Settings.Debug and ns.L["DEBUG_ENABLED"] or ns.L["DEBUG_DISABLED"]
     Utils.Print(msg)
 end
