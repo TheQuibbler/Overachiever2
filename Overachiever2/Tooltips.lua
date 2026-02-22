@@ -26,7 +26,7 @@ local function AddAchievementLine(tooltip, match)
     if match.criteriaString and match.criteriaString ~= "" then
         critName = match.criteriaString
     end
-    critName = Utils.AchievementIconSpacer() .. " " .. critName
+    critName = Utils.AchievementIconSpacer() .. " └ " .. critName
     local critStatusStr = match.criteriaCompleted and _G.CRITERIA_COMPLETED or _G.CRITERIA_NOT_COMPLETED
     local critColor = match.criteriaCompleted and COLOR_COMPLETE or COLOR_INCOMPLETE
     if Overachiever2_Settings.Debug then
