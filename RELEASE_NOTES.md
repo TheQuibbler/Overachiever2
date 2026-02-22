@@ -8,6 +8,9 @@ Instead, if you are authoring a PR for the main branch, add your release note to
 
 [NEW_RELEASE_NOTES.md](./NEW_RELEASE_NOTES.md).
 
+## 0.1.6
+- fix: Now it correctly display criteria status on the NPC tooltip
+
 ## 0.1.4
 - Display the same criteriaString in the NPC unit tooltip as the one displayed in the achievement frame.
 
