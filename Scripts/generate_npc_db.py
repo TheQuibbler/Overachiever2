@@ -203,6 +203,12 @@ def generate_lua():
     ach_by_tree = {}
     with open(os.path.join(RESOURCES_DIR, "Achievement.csv"), encoding="utf-8") as f:
         for row in csv.DictReader(f):
+            # Skip achievements that share criteria with another achievement.
+            # These are duplicates (e.g. Alliance/Horde variants, or tiered achievements
+            # like "Medium Rare" vs "Bloody Rare") that reference identical criteriaIDs.
+            # Processing them would create duplicate NPC→achievement mappings.
+            if row.get("Shares_criteria", "0") != "0":
+                continue
             tree_id = row.get("Criteria_tree", "0")
             if tree_id and tree_id != "0":
                 ach_by_tree[tree_id] = row["ID"]
