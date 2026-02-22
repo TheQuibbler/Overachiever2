@@ -359,9 +359,10 @@ def generate_lua():
         f.write("-- NPC ID -> { {achievementID, criteriaID, orderIndex}, ... }\n")
         f.write("ns.DB.Npc = {\n")
         for npc_id, pairs in sorted(npc_to_achievements.items(), key=lambda x: int(x[0])):
+            # Sort by all three values (achID, criteriaID, orderIndex) for deterministic output
             entries = ", ".join(
                 f"{{{ach_id}, {crit_id}, {order_idx}}}"
-                for ach_id, crit_id, order_idx in sorted(pairs, key=lambda x: int(x[0]))
+                for ach_id, crit_id, order_idx in sorted(pairs, key=lambda x: (int(x[0]), int(x[1]), int(x[2])))
             )
             f.write(f"    [{npc_id}] = {{ {entries} }},\n")
         f.write("}\n")
