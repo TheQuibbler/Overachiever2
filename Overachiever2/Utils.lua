@@ -13,7 +13,7 @@ local Utils = Overachiever2.Utils
 Utils.WhiteColor = "ffffffff"
 Utils.BlizzardGreenColor = "ff7eff00"
 Utils.BlizzardRedColor = "ffff3D3D"
-Utils.GoldColor = "ffffd100"
+Utils.BlizzardGoldColor = "ffffd200"
 Utils.RedColor = "ffff0000"
 Utils.GreenColor = "ff00ff00"
 Utils.BlueColor = "ff0000ff"
@@ -35,8 +35,8 @@ function Utils.BlizzardRedText(text)
     return "|c" .. Utils.BlizzardRedColor .. text .. "|r"
 end
 
-function Utils.GoldText(text)
-    return "|c" .. Utils.GoldColor .. text .. "|r"
+function Utils.BlizzardGoldText(text)
+    return "|c" .. Utils.BlizzardGoldColor .. text .. "|r"
 end
 
 function Utils.RedText(text)
@@ -67,8 +67,12 @@ function Utils.AchievementIconText()
     return "|T" .. Utils.AchievementIconPath .. ":0|t"
 end
 
-function Utils.AchievementIconSpacer()
+function Utils.AchievementIconSpacerText()
     return "|T" .. Utils.AchievementIconPath .. ":0::::256:256:0:0:0:0|t"
+end
+
+function Utils.GrayDotIconText()
+    return "|cff888888•|r"
 end
 
 function Utils.CheckAtlasText()
@@ -87,7 +91,7 @@ end
 function Utils.ColorByType(val)
     local t = type(val)
     if t == "number" then
-        return Utils.GoldText(tostring(val))
+        return Utils.BlizzardGoldText(tostring(val))
     elseif t == "boolean" then
         return (val and Utils.GreenText("true") or Utils.RedText("false"))
     elseif t == "string" then
