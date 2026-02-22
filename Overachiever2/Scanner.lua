@@ -43,7 +43,7 @@ function ns.GetUnitAchievements(unit)
                 local criteriaString, _, critCompleted = GetAchievementCriteriaInfoByID(achID, criteriaID)
                 -- Fallback to orderIndex-based lookup for localized name
                 if (not criteriaString or criteriaString == "") and orderIndex then
-                    criteriaString = GetAchievementCriteriaInfo(achID, orderIndex)
+                    criteriaString, _, critCompleted = GetAchievementCriteriaInfo(achID, orderIndex)
                 end
                 table.insert(matches, {
                     achID = achID,
