@@ -1,5 +1,5 @@
 -- Overachiever2: Prebuilt Database
--- Auto-generated lookup tables for NPC/Item -> Achievement mappings
+-- Auto-generated lookup tables for NPC -> Achievement mappings
 -- Do not edit manually.
 -- Format: [npcID] = { {achID, criteriaID, orderIndex}, ... }
 -- criteriaID  : use with GetAchievementCriteriaInfoByID(achID, criteriaID)
@@ -10,7 +10,7 @@ local _, ns = ...
 ns.DB = ns.DB or {}
 
 -- NPC ID -> { {achievementID, criteriaID, orderIndex}, ... }
-ns.DB.NpcAchievements = {
+ns.DB.Npc = {
     [620] = { {1206, 3745, 3} },
     [639] = { {1091, 3262, 1}, {40998, 70564, 1}, {41000, 70564, 1} },
     [721] = { {1206, 3755, 12} },

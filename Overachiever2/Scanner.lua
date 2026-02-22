@@ -27,7 +27,7 @@ function ns.GetUnitAchievements(unit)
     local npcID = ns.GetIDFromGUID(guid)
     if not npcID then return {} end
 
-    local entries = ns.DB.NpcAchievements[npcID]
+    local entries = ns.DB.Npc[npcID]
     if not entries then return {} end
 
     -- Deduplicate by achievement ID (one NPC can match multiple criteria of the same achievement)
