@@ -178,6 +178,10 @@ local function OnTooltipSetAchievement(tooltip, data)
     else
         completeness = Utils.GrayText(_G.IN_PROGRESS)
     end
+    if Overachiever2_Settings.Debug then
+        -- Append an achievement ID to the achievement name
+        achievementName = achievementName .. " (" .. Utils.DebugIconText() .. Utils.BlizzardGreenText("Achievement ID:") .. " " .. achID .. ")"
+    end
     tooltip:AddLine(achievementName)
     tooltip:AddLine(completeness)
 
