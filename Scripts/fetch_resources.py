@@ -48,10 +48,17 @@ import urllib.error
 import os
 import sys
 
+# ── Path Detection ────────────────────────────────────────────────────────────
+
+# Automatically detect project root directory (parent of Scripts directory)
+# This allows the script to be run from any directory
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)  # Go up one level from Scripts/
+
 # ── Configuration ─────────────────────────────────────────────────────────────
 
 # Directory where all downloaded resources will be stored
-RESOURCES_DIR = "resources"
+RESOURCES_DIR = os.path.join(PROJECT_ROOT, "Scripts", "resources")
 
 # Hidden file that persists the WoW build version from the last successful download.
 # Used to detect whether a new patch has been released since last execution.

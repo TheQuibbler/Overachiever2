@@ -68,17 +68,20 @@ WHY criteriaID AND NOT criteriaIndex?
     require knowing the runtime ordering of criteria.
 
 OUTPUT:
-    npcAchievements.lua  - Lua table mapping NPC IDs to {achID, criteriaID} pairs
+    Overachiever2/DBNpc.lua  - Lua table mapping NPC IDs to {achID, criteriaID, orderIndex} tuples
 
 LUA OUTPUT FORMAT:
-    [npcID] = { {achID, criteriaID, orderIndex}, ... },
+    ns.DB.Npc = {
+        [npcID] = { {achID, criteriaID, orderIndex}, ... },
+        ...
+    }
 
     Example:
         [129877] = { {13094, 56789, 1} },               -- one achievement
         [12345]  = { {111, 222, 1}, {333, 444, 2} },    -- appears in two achievements
 
 ADDON USAGE:
-    local data = NpcAchievements[npcID]
+    local data = ns.DB.Npc[npcID]
     if data then
         for _, pair in ipairs(data) do
             local achID, criteriaID, orderIndex = pair[1], pair[2], pair[3]
@@ -97,13 +100,20 @@ import csv
 import os
 import sys
 
+# ── Path Detection ────────────────────────────────────────────────────────────
+
+# Automatically detect project root directory (parent of Scripts directory)
+# This allows the script to be run from any directory
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)  # Go up one level from Scripts/
+
 # ── Configuration ─────────────────────────────────────────────────────────────
 
 # Directory where downloaded resources are stored
-RESOURCES_DIR = "resources"
+RESOURCES_DIR = os.path.join(PROJECT_ROOT, "Scripts", "resources")
 
 # Output lua file consumed by the Overachiever2 addon
-OUTPUT_LUA = "npcAchievements.lua"
+OUTPUT_LUA = os.path.join(PROJECT_ROOT, "Overachiever2", "DBNpc.lua")
 
 # Required CSV files that must exist in the resources directory
 REQUIRED_FILES = [
@@ -178,7 +188,7 @@ def generate_lua():
         GetAchievementCriteriaInfoByID(achID, criteriaID) directly.
 
     Step 4 - Output:
-        Write npcAchievements.lua with the final mapping, sorted numerically
+        Write Overachiever2/DBNpc.lua with the final mapping, sorted numerically
         by NPC ID. Each entry contains one or more {achID, criteriaID, orderIndex} tuples.
 
     Returns:
@@ -336,20 +346,25 @@ def generate_lua():
     print(f"   → {len(npc_to_achievements)} NPC-achievement mappings found!")
 
     # ── Step 4: Write the lua file ─────────────────────────────────────────────
-    print("4. Writing npcAchievements.lua...")
+    print(f"4. Writing {os.path.relpath(OUTPUT_LUA, PROJECT_ROOT)}...")
     with open(OUTPUT_LUA, "w", encoding="utf-8") as f:
-        f.write("-- Auto-generated. Do not edit manually.\n")
+        f.write("-- Overachiever2: Prebuilt Database\n")
+        f.write("-- Auto-generated lookup tables for NPC -> Achievement mappings\n")
+        f.write("-- Do not edit manually.\n")
         f.write("-- Format: [npcID] = { {achID, criteriaID, orderIndex}, ... }\n")
-        f.write("-- criteriaID : use with GetAchievementCriteriaInfoByID(achID, criteriaID)\n")
-        f.write("-- orderIndex : use directly with GetAchievementCriteriaInfo(achID, orderIndex) for localized name\n\n")
-        f.write("local NpcAchievements = {\n")
+        f.write("-- criteriaID  : use with GetAchievementCriteriaInfoByID(achID, criteriaID)\n")
+        f.write("-- orderIndex  : use with GetAchievementCriteriaInfo(achID, orderIndex) for localized name\n\n")
+        f.write("local _, ns = ...\n\n")
+        f.write("ns.DB = ns.DB or {}\n\n")
+        f.write("-- NPC ID -> { {achievementID, criteriaID, orderIndex}, ... }\n")
+        f.write("ns.DB.Npc = {\n")
         for npc_id, pairs in sorted(npc_to_achievements.items(), key=lambda x: int(x[0])):
             entries = ", ".join(
                 f"{{{ach_id}, {crit_id}, {order_idx}}}"
                 for ach_id, crit_id, order_idx in sorted(pairs, key=lambda x: int(x[0]))
             )
             f.write(f"    [{npc_id}] = {{ {entries} }},\n")
-        f.write("}\n\nreturn NpcAchievements\n")
+        f.write("}\n")
 
     return len(npc_to_achievements)
 
@@ -364,4 +379,4 @@ check_required_files()
 # Generate the lua file from the downloaded resources
 count = generate_lua()
 
-print(f"\n✅ Done! {count} NPC mappings → {OUTPUT_LUA}")
+print(f"\n✅ Done! {count} NPC mappings written to {os.path.relpath(OUTPUT_LUA, PROJECT_ROOT)}")
