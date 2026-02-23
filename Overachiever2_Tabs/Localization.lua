@@ -32,3 +32,14 @@ if GetLocale() == "koKR" then
     L["TAB_WATCH_SORT_BY"] = "정렬:"
     L["TAB_WATCH_REMOVE_ACHIEVEMENT"] = "감시 목록에서 업적 제거. 또는 마우스 오른쪽 버튼으로 제거할 수 있습니다."
 end
+
+-- ============================================================================
+-- Simplified Chinese (zhCN)
+-- ============================================================================
+
+if GetLocale() == "zhCN" then
+    L["TAB_WATCH"] = "关注"
+    L["TAB_WATCH_DESC"] = "将喜爱的成就加入个人关注列表。\n按住Alt键点击任意成就即可添加。"
+    L["TAB_WATCH_SORT_BY"] = "排序："
+    L["TAB_WATCH_REMOVE_ACHIEVEMENT"] = "从关注列表中移除此成就。您也可通过鼠标右键点击直接移除。"
+end

@@ -53,3 +53,25 @@ if GetLocale() == "koKR" then
 
     L["SERIESTIP"] = "업적 세트:";
 end
+
+-- ============================================================================
+-- Simplified Chinese (zhCN)
+-- ============================================================================
+
+if GetLocale() == "zhCN" then
+    L["CORE_INIT"] = "初始化完成。"
+    L["DEBUG_ENABLED"] = "调试模式已启用。"
+    L["DEBUG_DISABLED"] = "调试模式已禁用。"
+
+    L["SLASH_CMD_HELP"] = "Overachiever2 命令："
+    L["SLASH_CMD_REBUILD"] = "/oa rebuild：强制重建成就扫描器缓存。"
+    L["SLASH_CMD_DEBUG"] = "/oa debug：切换调试模式（显示提示信息ID）。"
+
+    L["SCANNER_INIT_MSG"] = "扫描器已通过 %s 初始化（耗时 %.2f 毫秒）。"
+    L["SCANNER_REBUILT"] = "成就扫描器缓存已重建。"
+
+    L["OPT_DEBUG_TITLE"] = "显示提示信息ID（调试模式）"
+    L["OPT_DEBUG_DESC"] = "在提示信息中显示NPC、物品与成就的ID。"
+
+    L["SERIESTIP"] = "系列成就的一部分："
+end
