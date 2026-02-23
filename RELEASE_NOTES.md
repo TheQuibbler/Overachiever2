@@ -8,6 +8,14 @@ Instead, if you are authoring a PR for the main branch, add your release note to
 
 [NEW_RELEASE_NOTES.md](./NEW_RELEASE_NOTES.md).
 
+## 0.2.1
+- Full Simplified Chinese (zhCN) support
+- Full Traditional Chinese (zhTW) support
+- Full German (deDE) support
+- Full French (frFR) support
+- Full Russian (ruRU) support
+- Full Spanish (esES / esMX) support
+
 ## 0.2.0
 - Show rare mob achievements in NPC tooltips
 
