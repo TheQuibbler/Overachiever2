@@ -73,6 +73,14 @@ URLS = {
     "ModifierTree.csv": "https://wago.tools/db2/ModifierTree/csv",
 }
 
+# SilverDragon achievements.lua URL.
+# This file contains manually curated NPC ID → criteriaID mappings for
+# Type 27 (quest-based) achievements that cannot be derived from DB2 files alone.
+# It is downloaded once and not tied to the WoW build version, so it is
+# re-downloaded on every run to stay up to date.
+SILVERDRAGON_URL  = "https://raw.githubusercontent.com/kemayo/wow-silverdragon/master/achievements.lua"
+SILVERDRAGON_FILE = os.path.join(RESOURCES_DIR, "achievements.lua")
+
 
 # ── Build Version Functions ───────────────────────────────────────────────────
 
@@ -150,19 +158,16 @@ def save_build(version):
 
 def download_csvs():
     """
-    Downloads the four DB2 CSV files from wago.tools to the resources directory.
+    Downloads the four DB2 CSV files from wago.tools and the SilverDragon
+    achievements.lua to the resources directory.
 
-    Downloads Achievement.csv, Criteria.csv, CriteriaTree.csv, and ModifierTree.csv
-    into the resources directory, overwriting any existing files.
-
-    wago.tools always serves the latest retail build, so re-downloading
-    guarantees we have up-to-date data after a patch.
+    Downloads Achievement.csv, Criteria.csv, CriteriaTree.csv, ModifierTree.csv,
+    and achievements.lua into the resources directory, overwriting any existing files.
 
     Returns:
-        bool: True if all four files downloaded successfully, False otherwise.
-              On the first failure, the function returns immediately without
-              attempting the remaining downloads.
+        bool: True if all files downloaded successfully, False otherwise.
     """
+    # Download DB2 CSV files from wago.tools
     for filename, url in URLS.items():
         filepath = os.path.join(RESOURCES_DIR, filename)
         print(f"  Downloading: {filename} ...", end=" ", flush=True)
@@ -175,6 +180,19 @@ def download_csvs():
         except Exception as e:
             print(f"❌ Failed: {e}")
             return False
+
+    # Download SilverDragon achievements.lua (supplemental Type 27 data)
+    print(f"  Downloading: achievements.lua (SilverDragon) ...", end=" ", flush=True)
+    try:
+        req = urllib.request.Request(SILVERDRAGON_URL, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            with open(SILVERDRAGON_FILE, "wb") as f:
+                f.write(resp.read())
+        print("✅")
+    except Exception as e:
+        print(f"⚠️  Failed (Type 27 mappings will be skipped): {e}")
+        # Non-fatal: generate_npc_db.py handles missing achievements.lua gracefully
+
     return True
 
 

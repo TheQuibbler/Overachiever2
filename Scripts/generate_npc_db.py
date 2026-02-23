@@ -98,6 +98,7 @@ MAINTENANCE:
 
 import csv
 import os
+import re
 import sys
 
 # ── Path Detection ────────────────────────────────────────────────────────────
@@ -122,6 +123,10 @@ REQUIRED_FILES = [
     "CriteriaTree.csv",
     "ModifierTree.csv",
 ]
+
+# Optional SilverDragon achievements.lua for supplemental NPC → achievement data.
+# Downloaded by fetch_resources.py. If absent, SilverDragon mappings are skipped.
+SILVERDRAGON_LUA = os.path.join(RESOURCES_DIR, "achievements.lua")
 
 
 # ── Input Validation ──────────────────────────────────────────────────────────
@@ -350,6 +355,66 @@ def generate_lua():
                             npc_to_achievements[npc_id] = set()
                         npc_to_achievements[npc_id].add((ach_id, criteria_id, order_index))
     print(f"   → {len(npc_to_achievements)} NPC-achievement mappings found!")
+
+    # ── Step 3.5: Merge SilverDragon data ─────────────────────────────────────
+    # SilverDragon maintains a manually curated NPC ID → criteriaID mapping.
+    # We trust this data as-is, but apply two rules before merging:
+    #
+    # Rule 1 - Skip if already covered:
+    #   For the same (npcID, achID) pair, if the SilverDragon value matches
+    #   any existing criteriaID or orderIndex in our data, the NPC is already
+    #   handled correctly — skip the merge to avoid duplicate entries.
+    #
+    # Rule 2 - Handle orderIndex-as-value:
+    #   SilverDragon sometimes stores an orderIndex instead of a criteriaID
+    #   (e.g. [68321] = 1). When merging, we store the SilverDragon value as
+    #   BOTH criteriaID and orderIndex. The addon will try criteriaID first via
+    #   GetAchievementCriteriaInfoByID(), and if that fails, fall back to
+    #   GetAchievementCriteriaInfo() with orderIndex — so one of the two will work.
+    if os.path.exists(SILVERDRAGON_LUA):
+        print("3.5. Merging SilverDragon achievements.lua...")
+        sd_merged  = 0
+        sd_skipped = 0
+        current_ach = None
+        with open(SILVERDRAGON_LUA, encoding="utf-8") as f:
+            for line in f:
+                line_stripped = line.strip()
+                # Achievement block start: [7317] = {
+                m = re.match(r'\[(\d+)\]\s*=\s*\{', line_stripped)
+                if m:
+                    current_ach = m.group(1)
+                    continue
+                # NPC entry: [68321] = 1,  or  [58771] = 20522,
+                m = re.match(r'\[(\d+)\]\s*=\s*(\d+)', line_stripped)
+                if m and current_ach:
+                    npc_id   = m.group(1)
+                    sd_value = m.group(2)
+
+                    # Rule 1: Check if this (npcID, achID) pair is already covered.
+                    # Compare sd_value against all existing criteriaIDs and orderIndexes
+                    # for the same achID in our data.
+                    already_covered = False
+                    for (ach_id, crit_id, order_idx) in npc_to_achievements.get(npc_id, set()):
+                        if ach_id == current_ach and (crit_id == sd_value or str(order_idx) == sd_value):
+                            already_covered = True
+                            break
+                    if already_covered:
+                        sd_skipped += 1
+                        continue
+
+                    # Rule 2: Store sd_value as both criteriaID and orderIndex.
+                    # If sd_value is a real criteriaID, GetAchievementCriteriaInfoByID() works.
+                    # If sd_value is an orderIndex, GetAchievementCriteriaInfo() works.
+                    if npc_id not in npc_to_achievements:
+                        npc_to_achievements[npc_id] = set()
+                    npc_to_achievements[npc_id].add((current_ach, sd_value, int(sd_value)))
+                    sd_merged += 1
+
+        print(f"   → {sd_merged} SilverDragon mappings merged, {sd_skipped} skipped (already covered)")
+    else:
+        print("3.5. SilverDragon achievements.lua not found, skipping.")
+        print(f"     (Run fetch_resources.py to download it)")
+    print(f"   → Total: {len(npc_to_achievements)} NPC mappings after merge")
 
     # ── Step 4: Write the lua file ─────────────────────────────────────────────
     print(f"4. Writing {os.path.relpath(OUTPUT_LUA, PROJECT_ROOT)}...")
