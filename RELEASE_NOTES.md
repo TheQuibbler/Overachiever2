@@ -8,6 +8,9 @@ Instead, if you are authoring a PR for the main branch, add your release note to
 
 [NEW_RELEASE_NOTES.md](./NEW_RELEASE_NOTES.md).
 
+## 0.2.0
+- Show rare mob achievements in NPC tooltips
+
 ## 0.1.6
 - fix: Now it correctly display criteria status on the NPC tooltip
 
