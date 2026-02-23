@@ -4,38 +4,48 @@ Overachiever2 - Resource Downloader
 ================================================================================
 
 OVERVIEW:
-    This script downloads the DB2 CSV files from wago.tools that are required
-    to generate npcAchievements.lua. All downloaded files are stored in a
-    "resources" directory along with version information.
+    This script downloads the DB2 CSV files from wago.tools and SilverDragon's
+    achievements.lua from GitHub, both required to generate npcAchievements.lua.
+    All downloaded files are stored in a "resources" directory along with
+    version/hash information. The two download sources are checked independently.
 
 USAGE:
-    Normal run (only downloads if a new WoW patch is detected):
+    Normal run (only downloads if updates are detected):
         python fetch_resources.py
 
-    Force download regardless of patch version:
+    Force download regardless of version/SHA:
         python fetch_resources.py --force
 
-HOW PATCH DETECTION WORKS:
-    wago.tools serves CSV files with a build version embedded in the
-    Content-Disposition HTTP header, e.g.:
-        filename="Achievement.12.0.1.66044.csv"
-    This script extracts that version string and compares it against the
-    version saved in resources/.last_build from the previous run. If they match,
-    download is skipped. If they differ (or .last_build doesn't exist),
-    the script downloads fresh CSVs.
+HOW UPDATE DETECTION WORKS:
+    1. SilverDragon achievements.lua:
+       The GitHub Contents API returns a git blob SHA for the file. This SHA is
+       compared against the value saved in resources/.last_silverdragon_sha.
+       If they differ (or the file hasn't been downloaded yet), a fresh copy is
+       downloaded from GitHub.
 
-DATA SOURCES (all from wago.tools, which mirrors WoW's DB2 game files):
-    - Achievement.csv   : Achievement ID, name, and root CriteriaTree ID
-    - CriteriaTree.csv  : Tree structure linking achievements to criteria
-    - Criteria.csv      : Individual criteria with type, asset, and criteriaID
-    - ModifierTree.csv  : NPC ID lookup for emote-type criteria (Type 54)
+    2. wago.tools DB2 CSVs:
+       wago.tools serves CSV files with a build version embedded in the
+       Content-Disposition HTTP header, e.g.:
+           filename="Achievement.12.0.1.66044.csv"
+       This version is compared against resources/.last_build from the previous
+       run. If they differ (or .last_build doesn't exist), fresh CSVs are
+       downloaded.
+
+DATA SOURCES:
+    - Achievement.csv   : Achievement ID, name, and root CriteriaTree ID  (wago.tools)
+    - CriteriaTree.csv  : Tree structure linking achievements to criteria   (wago.tools)
+    - Criteria.csv      : Individual criteria with type, asset, criteriaID  (wago.tools)
+    - ModifierTree.csv  : NPC ID lookup for emote-type criteria (Type 54)   (wago.tools)
+    - achievements.lua  : Curated NPC→criteria mappings for Type 27         (SilverDragon/GitHub)
 
 OUTPUT:
-    resources/Achievement.csv   - Downloaded CSV file
-    resources/CriteriaTree.csv  - Downloaded CSV file
-    resources/Criteria.csv      - Downloaded CSV file
-    resources/ModifierTree.csv  - Downloaded CSV file
-    resources/.last_build       - Hidden file storing the last downloaded build version
+    resources/Achievement.csv          - Downloaded CSV file
+    resources/CriteriaTree.csv         - Downloaded CSV file
+    resources/Criteria.csv             - Downloaded CSV file
+    resources/ModifierTree.csv         - Downloaded CSV file
+    resources/achievements.lua         - Downloaded SilverDragon file
+    resources/.last_build              - Last downloaded WoW build version
+    resources/.last_silverdragon_sha   - Last downloaded SilverDragon git SHA
 
 NEXT STEP:
     After downloading, run generate_npc_db.py to process these files and
@@ -47,6 +57,7 @@ import urllib.request
 import urllib.error
 import os
 import sys
+import json
 
 # ── Path Detection ────────────────────────────────────────────────────────────
 
@@ -76,10 +87,16 @@ URLS = {
 # SilverDragon achievements.lua URL.
 # This file contains manually curated NPC ID → criteriaID mappings for
 # Type 27 (quest-based) achievements that cannot be derived from DB2 files alone.
-# It is downloaded once and not tied to the WoW build version, so it is
-# re-downloaded on every run to stay up to date.
+# Tracked independently from the WoW build version via its git blob SHA.
 SILVERDRAGON_URL  = "https://raw.githubusercontent.com/kemayo/wow-silverdragon/master/achievements.lua"
 SILVERDRAGON_FILE = os.path.join(RESOURCES_DIR, "achievements.lua")
+
+# GitHub API URL to query the file's git SHA without downloading the full content.
+SILVERDRAGON_API  = "https://api.github.com/repos/kemayo/wow-silverdragon/contents/achievements.lua"
+
+# Hidden file that persists the git SHA of the last downloaded SilverDragon file.
+# Tracked independently from the WoW build version.
+SILVERDRAGON_SHA_FILE = os.path.join(RESOURCES_DIR, ".last_silverdragon_sha")
 
 
 # ── Build Version Functions ───────────────────────────────────────────────────
@@ -154,20 +171,86 @@ def save_build(version):
         f.write(version)
 
 
+# ── SilverDragon SHA Functions ────────────────────────────────────────────────
+
+def get_remote_silverdragon_sha():
+    """
+    Fetches the git SHA of achievements.lua from the GitHub API.
+
+    Uses the GitHub Contents API which returns file metadata (including the git
+    blob SHA) without downloading the full file content.
+
+    Returns:
+        str: Git blob SHA, e.g. "a1b2c3d4..."
+        None: If the request fails
+    """
+    try:
+        req = urllib.request.Request(SILVERDRAGON_API, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            return data.get("sha")
+    except Exception as e:
+        print(f"⚠️  Failed to fetch SilverDragon SHA: {e}")
+        return None
+
+
+def get_last_silverdragon_sha():
+    """
+    Reads the git SHA from the last successful SilverDragon download.
+
+    Returns:
+        str: Previously saved SHA
+        None: If the file does not exist (first run or never downloaded)
+    """
+    if os.path.exists(SILVERDRAGON_SHA_FILE):
+        with open(SILVERDRAGON_SHA_FILE) as f:
+            return f.read().strip()
+    return None
+
+
+def save_silverdragon_sha(sha):
+    """
+    Saves the SilverDragon git SHA after a successful download.
+
+    Args:
+        sha (str): Git blob SHA to save
+    """
+    with open(SILVERDRAGON_SHA_FILE, "w") as f:
+        f.write(sha)
+
+
+def download_silverdragon():
+    """
+    Downloads achievements.lua from SilverDragon's GitHub repository.
+
+    Returns:
+        bool: True if downloaded successfully, False otherwise.
+    """
+    print(f"  Downloading: achievements.lua (SilverDragon) ...", end=" ", flush=True)
+    try:
+        req = urllib.request.Request(SILVERDRAGON_URL, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            with open(SILVERDRAGON_FILE, "wb") as f:
+                f.write(resp.read())
+        print("✅")
+        return True
+    except Exception as e:
+        print(f"⚠️  Failed (Type 27 mappings will be skipped): {e}")
+        return False
+
+
 # ── CSV Download ──────────────────────────────────────────────────────────────
 
 def download_csvs():
     """
-    Downloads the four DB2 CSV files from wago.tools and the SilverDragon
-    achievements.lua to the resources directory.
+    Downloads the four DB2 CSV files from wago.tools to the resources directory.
 
-    Downloads Achievement.csv, Criteria.csv, CriteriaTree.csv, ModifierTree.csv,
-    and achievements.lua into the resources directory, overwriting any existing files.
+    Downloads Achievement.csv, Criteria.csv, CriteriaTree.csv, and ModifierTree.csv
+    into the resources directory, overwriting any existing files.
 
     Returns:
         bool: True if all files downloaded successfully, False otherwise.
     """
-    # Download DB2 CSV files from wago.tools
     for filename, url in URLS.items():
         filepath = os.path.join(RESOURCES_DIR, filename)
         print(f"  Downloading: {filename} ...", end=" ", flush=True)
@@ -181,18 +264,6 @@ def download_csvs():
             print(f"❌ Failed: {e}")
             return False
 
-    # Download SilverDragon achievements.lua (supplemental Type 27 data)
-    print(f"  Downloading: achievements.lua (SilverDragon) ...", end=" ", flush=True)
-    try:
-        req = urllib.request.Request(SILVERDRAGON_URL, headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            with open(SILVERDRAGON_FILE, "wb") as f:
-                f.write(resp.read())
-        print("✅")
-    except Exception as e:
-        print(f"⚠️  Failed (Type 27 mappings will be skipped): {e}")
-        # Non-fatal: generate_npc_db.py handles missing achievements.lua gracefully
-
     return True
 
 
@@ -205,10 +276,41 @@ if not os.path.exists(RESOURCES_DIR):
     print(f"Creating {RESOURCES_DIR} directory...")
     os.makedirs(RESOURCES_DIR)
 
-# Check if --force flag was passed to bypass patch version comparison
+# Check if --force flag was passed to bypass version/SHA comparison
 force = "--force" in sys.argv
 
-# Fetch the current build version from wago.tools and compare with last download
+# ── 1. SilverDragon achievements.lua (independent of WoW build) ──────────────
+print("--- SilverDragon achievements.lua ---")
+print("Checking SilverDragon SHA...", end=" ", flush=True)
+remote_sha = get_remote_silverdragon_sha()
+local_sha  = get_last_silverdragon_sha()
+
+if remote_sha:
+    print(f"Remote: {remote_sha[:12]}...")
+else:
+    print("(unavailable)")
+
+if local_sha:
+    print(f"Last downloaded SHA:  {local_sha[:12]}...")
+else:
+    print("Last downloaded SHA:  (none - first run)")
+
+if not force and remote_sha and remote_sha == local_sha:
+    print("✅ SilverDragon achievements.lua is up to date.\n")
+else:
+    if force:
+        print("🔄 Force download mode")
+    elif not local_sha or not os.path.exists(SILVERDRAGON_FILE):
+        print("🆕 First download...")
+    else:
+        print("🆕 SilverDragon file changed!")
+
+    if download_silverdragon() and remote_sha:
+        save_silverdragon_sha(remote_sha)
+    print()
+
+# ── 2. wago.tools DB2 CSVs (tied to WoW build version) ──────────────────────
+print("--- wago.tools DB2 CSVs ---")
 print("Checking current WoW build...", end=" ", flush=True)
 latest = get_latest_build()
 last   = get_last_build()
@@ -223,35 +325,27 @@ if last:
 else:
     print("Last downloaded build: (none - first run)")
 
-# ── Patch detection: decide whether to proceed ────────────────────────────────
 if not force and latest and latest == last:
-    # Build version unchanged since last download — nothing to do
-    print(f"\n✅ Already up to date (build {latest}).")
-    print("   To force download: python fetch_resources.py --force")
-    sys.exit(0)
-
-if latest and last and latest != last:
-    print(f"\n🆕 New patch detected! ({last} → {latest})")
-elif not last:
-    print("\n🆕 First run - downloading data...")
+    print("✅ CSVs already up to date (build {}).\n".format(latest))
 else:
-    print("\n🔄 Force download mode")
+    if latest and last and latest != last:
+        print(f"\n🆕 New patch detected! ({last} → {latest})")
+    elif not last:
+        print("\n🆕 First run - downloading data...")
+    else:
+        print("\n🔄 Force download mode")
 
-# ── Download fresh CSVs ───────────────────────────────────────────────────────
-print("\n--- Downloading CSVs ---")
-if not download_csvs():
-    print("❌ Download failed. Aborting.")
-    sys.exit(1)
+    if not download_csvs():
+        print("❌ CSV download failed. Aborting.")
+        sys.exit(1)
 
-# ── Save build version for next run ───────────────────────────────────────────
-if latest:
-    save_build(latest)
-    print(f"\n✅ Done! Build {latest} downloaded to {RESOURCES_DIR}/")
-    print(f"   Next step: Run 'python generate_npc_db.py' to process these files.")
-else:
-    # If we couldn't determine the build version (e.g. offline during version check
-    # but still managed to download CSVs somehow), we still complete but can't save a
-    # version. The next run will re-download CSVs since no version is on record.
-    print(f"\n✅ Done! Files downloaded to {RESOURCES_DIR}/")
-    print("   ⚠️  Could not save build number (will re-download on next run)")
-    print(f"   Next step: Run 'python generate_npc_db.py' to process these files.")
+    if latest:
+        save_build(latest)
+        print(f"✅ Build {latest} downloaded.\n")
+    else:
+        print("✅ CSVs downloaded.")
+        print("⚠️  Could not save build number (will re-download on next run)\n")
+
+# ── Summary ───────────────────────────────────────────────────────────────────
+print(f"Resources directory: {RESOURCES_DIR}/")
+print("Next step: Run 'python generate_npc_db.py' to process these files.")
