@@ -32,11 +32,13 @@ L["OPT_DEBUG_DESC"] = "Show NPC, Item, and Achievement IDs in tooltips."
 
 L["SERIESTIP"] = "Part of a series:"
 
+local locale = GetLocale()
+
 -- ============================================================================
 -- Korean (koKR)
 -- ============================================================================
 
-if GetLocale() == "koKR" then
+if locale == "koKR" then
     L["CORE_INIT"] = "초기화가 완료되었습니다."
     L["DEBUG_ENABLED"] = "디버그 모드가 활성화되었습니다."
     L["DEBUG_DISABLED"] = "디버그 모드가 비활성화되었습니다."
@@ -58,7 +60,7 @@ end
 -- Simplified Chinese (zhCN)
 -- ============================================================================
 
-if GetLocale() == "zhCN" then
+if locale == "zhCN" then
     L["CORE_INIT"] = "初始化完成。"
     L["DEBUG_ENABLED"] = "调试模式已启用。"
     L["DEBUG_DISABLED"] = "调试模式已禁用。"
@@ -74,4 +76,114 @@ if GetLocale() == "zhCN" then
     L["OPT_DEBUG_DESC"] = "在提示信息中显示NPC、物品与成就的ID。"
 
     L["SERIESTIP"] = "系列成就的一部分："
+end
+
+-- ============================================================================
+-- Traditional Chinese (zhTW)
+-- ============================================================================
+
+if locale == "zhTW" then
+    L["CORE_INIT"] = "初始化完成。"
+    L["DEBUG_ENABLED"] = "除錯模式已啟用。"
+    L["DEBUG_DISABLED"] = "除錯模式已停用。"
+
+    L["SLASH_CMD_HELP"] = "Overachiever2 指令："
+    L["SLASH_CMD_REBUILD"] = "/oa rebuild：強制重建成就掃描器快取。"
+    L["SLASH_CMD_DEBUG"] = "/oa debug：切換除錯模式（顯示提示資訊ID）。"
+
+    L["SCANNER_INIT_MSG"] = "掃描器已透過 %s 初始化（耗時 %.2f 毫秒）。"
+    L["SCANNER_REBUILT"] = "成就掃描器快取已重建。"
+
+    L["OPT_DEBUG_TITLE"] = "顯示提示資訊ID（除錯模式）"
+    L["OPT_DEBUG_DESC"] = "在提示資訊中顯示NPC、物品與成就的ID。"
+
+    L["SERIESTIP"] = "系列成就的一部分："
+end
+
+-- ============================================================================
+-- German (deDE)
+-- ============================================================================
+
+if locale == "deDE" then
+    L["CORE_INIT"] = "Initialisierung abgeschlossen."
+    L["DEBUG_ENABLED"] = "Debug-Modus aktiviert."
+    L["DEBUG_DISABLED"] = "Debug-Modus deaktiviert."
+
+    L["SLASH_CMD_HELP"] = "Overachiever2-Befehle:"
+    L["SLASH_CMD_REBUILD"] = "/oa rebuild: Erfolgscanner-Cache neu erstellen."
+    L["SLASH_CMD_DEBUG"] = "/oa debug: Debug-Modus umschalten (Tooltip-ID-Anzeige)."
+
+    L["SCANNER_INIT_MSG"] = "Scanner über %s initialisiert. (%.2f ms)"
+    L["SCANNER_REBUILT"] = "Erfolgscanner-Cache wurde neu erstellt."
+
+    L["OPT_DEBUG_TITLE"] = "Tooltip-ID-Anzeige (Debug-Modus)"
+    L["OPT_DEBUG_DESC"] = "NPC-, Gegenstands- und Erfolgs-IDs in Tooltips anzeigen."
+
+    L["SERIESTIP"] = "Teil einer Serie:"
+end
+
+-- ============================================================================
+-- French (frFR)
+-- ============================================================================
+
+if locale == "frFR" then
+    L["CORE_INIT"] = "Initialisation terminée."
+    L["DEBUG_ENABLED"] = "Mode débogage activé."
+    L["DEBUG_DISABLED"] = "Mode débogage désactivé."
+
+    L["SLASH_CMD_HELP"] = "Commandes Overachiever2 :"
+    L["SLASH_CMD_REBUILD"] = "/oa rebuild : Forcer la reconstruction du cache du scanner de hauts faits."
+    L["SLASH_CMD_DEBUG"] = "/oa debug : Activer/désactiver le mode débogage (affichage des ID dans les infobulles)."
+
+    L["SCANNER_INIT_MSG"] = "Scanner initialisé via %s. (%.2f ms)"
+    L["SCANNER_REBUILT"] = "Cache du scanner de hauts faits reconstruit."
+
+    L["OPT_DEBUG_TITLE"] = "Affichage des ID dans les infobulles (Mode débogage)"
+    L["OPT_DEBUG_DESC"] = "Afficher les ID des PNJ, objets et hauts faits dans les infobulles."
+
+    L["SERIESTIP"] = "Fait partie d'une série :"
+end
+
+-- ============================================================================
+-- Russian (ruRU)
+-- ============================================================================
+
+if locale == "ruRU" then
+    L["CORE_INIT"] = "Инициализация завершена."
+    L["DEBUG_ENABLED"] = "Режим отладки включён."
+    L["DEBUG_DISABLED"] = "Режим отладки отключён."
+
+    L["SLASH_CMD_HELP"] = "Команды Overachiever2:"
+    L["SLASH_CMD_REBUILD"] = "/oa rebuild: Принудительно пересоздать кэш сканера достижений."
+    L["SLASH_CMD_DEBUG"] = "/oa debug: Переключить режим отладки (отображение ID в подсказках)."
+
+    L["SCANNER_INIT_MSG"] = "Сканер инициализирован через %s. (%.2f мс)"
+    L["SCANNER_REBUILT"] = "Кэш сканера достижений пересоздан."
+
+    L["OPT_DEBUG_TITLE"] = "Отображение ID в подсказках (Режим отладки)"
+    L["OPT_DEBUG_DESC"] = "Показывать ID НПС, предметов и достижений в подсказках."
+
+    L["SERIESTIP"] = "Часть серии:"
+end
+
+-- ============================================================================
+-- Spanish (esES / esMX)
+-- ============================================================================
+
+if locale == "esES" or locale == "esMX" then
+    L["CORE_INIT"] = "Inicialización completada."
+    L["DEBUG_ENABLED"] = "Modo de depuración activado."
+    L["DEBUG_DISABLED"] = "Modo de depuración desactivado."
+
+    L["SLASH_CMD_HELP"] = "Comandos de Overachiever2:"
+    L["SLASH_CMD_REBUILD"] = "/oa rebuild: Forzar la reconstrucción de la caché del escáner de logros."
+    L["SLASH_CMD_DEBUG"] = "/oa debug: Alternar el modo de depuración (mostrar ID en información emergente)."
+
+    L["SCANNER_INIT_MSG"] = "Escáner inicializado a través de %s. (%.2f ms)"
+    L["SCANNER_REBUILT"] = "Caché del escáner de logros reconstruida."
+
+    L["OPT_DEBUG_TITLE"] = "Mostrar ID en información emergente (Modo de depuración)"
+    L["OPT_DEBUG_DESC"] = "Mostrar ID de PNJ, objetos y logros en la información emergente."
+
+    L["SERIESTIP"] = "Parte de una serie:"
 end
