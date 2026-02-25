@@ -23,6 +23,7 @@ L["DEBUG_DISABLED"] = "Debug mode disabled."
 L["SLASH_CMD_HELP"] = "Overachiever2 Commands:"
 L["SLASH_CMD_REBUILD"] = "/oa rebuild: Force rebuild achievement scanner cache."
 L["SLASH_CMD_DEBUG"] = "/oa debug: Toggle debug mode (Tooltip ID display)."
+L["SLASH_CMD_SEARCH"] = "/oa search <query>: Search achievements by name or ID (for debug)."
 
 L["SCANNER_INIT_MSG"] = "Scanner initialized via %s. (%.2f ms)"
 L["SCANNER_REBUILT"] = "Achievement scanner memory rebuilt."
@@ -46,6 +47,7 @@ if locale == "koKR" then
     L["SLASH_CMD_HELP"] = "Overachiever2 명령어:"
     L["SLASH_CMD_REBUILD"] = "/oa rebuild: 업적 스캐너 캐시를 강제로 다시 생성합니다."
     L["SLASH_CMD_DEBUG"] = "/oa debug: 디버그 모드(툴팁 ID 표시)를 켜거나 끕니다."
+    L["SLASH_CMD_SEARCH"] = "/oa search <검색어>: 이름 또는 ID로 업적을 검색합니다 (디버그용)."
 
     L["SCANNER_INIT_MSG"] = "스캐너를 %s를 통해 초기화했습니다. (%.2f ms)"
     L["SCANNER_REBUILT"] = "모든 업적 스캐너 정보를 다시 생성했습니다."
@@ -68,6 +70,7 @@ if locale == "zhCN" then
     L["SLASH_CMD_HELP"] = "Overachiever2 命令："
     L["SLASH_CMD_REBUILD"] = "/oa rebuild：强制重建成就扫描器缓存。"
     L["SLASH_CMD_DEBUG"] = "/oa debug：切换调试模式（显示提示信息ID）。"
+    L["SLASH_CMD_SEARCH"] = "/oa search <查询>：按名称或ID搜索成就（用于调试）。"
 
     L["SCANNER_INIT_MSG"] = "扫描器已通过 %s 初始化（耗时 %.2f 毫秒）。"
     L["SCANNER_REBUILT"] = "成就扫描器缓存已重建。"
@@ -90,6 +93,7 @@ if locale == "zhTW" then
     L["SLASH_CMD_HELP"] = "Overachiever2 指令："
     L["SLASH_CMD_REBUILD"] = "/oa rebuild：強制重建成就掃描器快取。"
     L["SLASH_CMD_DEBUG"] = "/oa debug：切換除錯模式（顯示提示資訊ID）。"
+    L["SLASH_CMD_SEARCH"] = "/oa search <查詢>：按名稱或ID搜尋成就（用於除錯）。"
 
     L["SCANNER_INIT_MSG"] = "掃描器已透過 %s 初始化（耗時 %.2f 毫秒）。"
     L["SCANNER_REBUILT"] = "成就掃描器快取已重建。"
@@ -112,6 +116,7 @@ if locale == "deDE" then
     L["SLASH_CMD_HELP"] = "Overachiever2-Befehle:"
     L["SLASH_CMD_REBUILD"] = "/oa rebuild: Erfolgscanner-Cache neu erstellen."
     L["SLASH_CMD_DEBUG"] = "/oa debug: Debug-Modus umschalten (Tooltip-ID-Anzeige)."
+    L["SLASH_CMD_SEARCH"] = "/oa search <Suchbegriff>: Erfolge nach Name oder ID suchen (für Debugging)."
 
     L["SCANNER_INIT_MSG"] = "Scanner über %s initialisiert. (%.2f ms)"
     L["SCANNER_REBUILT"] = "Erfolgscanner-Cache wurde neu erstellt."
@@ -134,6 +139,7 @@ if locale == "frFR" then
     L["SLASH_CMD_HELP"] = "Commandes Overachiever2 :"
     L["SLASH_CMD_REBUILD"] = "/oa rebuild : Forcer la reconstruction du cache du scanner de hauts faits."
     L["SLASH_CMD_DEBUG"] = "/oa debug : Activer/désactiver le mode débogage (affichage des ID dans les infobulles)."
+    L["SLASH_CMD_SEARCH"] = "/oa search <requête> : Rechercher des hauts faits par nom ou ID (pour débogage)."
 
     L["SCANNER_INIT_MSG"] = "Scanner initialisé via %s. (%.2f ms)"
     L["SCANNER_REBUILT"] = "Cache du scanner de hauts faits reconstruit."
@@ -156,6 +162,7 @@ if locale == "ruRU" then
     L["SLASH_CMD_HELP"] = "Команды Overachiever2:"
     L["SLASH_CMD_REBUILD"] = "/oa rebuild: Принудительно пересоздать кэш сканера достижений."
     L["SLASH_CMD_DEBUG"] = "/oa debug: Переключить режим отладки (отображение ID в подсказках)."
+    L["SLASH_CMD_SEARCH"] = "/oa search <запрос>: Поиск достижений по имени или ID (для отладки)."
 
     L["SCANNER_INIT_MSG"] = "Сканер инициализирован через %s. (%.2f мс)"
     L["SCANNER_REBUILT"] = "Кэш сканера достижений пересоздан."
@@ -178,6 +185,7 @@ if locale == "esES" or locale == "esMX" then
     L["SLASH_CMD_HELP"] = "Comandos de Overachiever2:"
     L["SLASH_CMD_REBUILD"] = "/oa rebuild: Forzar la reconstrucción de la caché del escáner de logros."
     L["SLASH_CMD_DEBUG"] = "/oa debug: Alternar el modo de depuración (mostrar ID en información emergente)."
+    L["SLASH_CMD_SEARCH"] = "/oa search <consulta>: Buscar logros por nombre o ID (para depuración)."
 
     L["SCANNER_INIT_MSG"] = "Escáner inicializado a través de %s. (%.2f ms)"
     L["SCANNER_REBUILT"] = "Caché del escáner de logros reconstruida."

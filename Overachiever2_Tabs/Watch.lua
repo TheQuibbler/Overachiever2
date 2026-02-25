@@ -127,7 +127,7 @@ local function InitWatch(self)
     sortLabel:SetText(Utils.WhiteText(ns.L["TAB_WATCH_SORT_BY"]))
 
     local sortDropdown = CreateFrame("DropdownButton", nil, leftPane, "WowStyle2DropdownTemplate")
-    sortDropdown:SetSize(160, 22)
+    sortDropdown:SetSize(173, 22)
     sortDropdown:SetPoint("TOPLEFT", sortLabel, "BOTTOMLEFT", 0, -3)
     sortDropdown:SetupMenu(function(dropdown, rootDescription)
         rootDescription:SetTag("MENU_OVERACHIEVER2_WATCH_SORT")
@@ -185,6 +185,15 @@ frame, tab = ns.RegisterTab("Overachiever2_WatchFrame", ns.L["TAB_WATCH"], {
     onHide = OnWatchHide,
     categoryWaterMark = WATCH_CATEGORY_WATERMARK,
 })
+
+-- ============================================================================
+-- Public API (for other tabs to add achievements to watch list)
+-- ============================================================================
+
+-- Expose AddToWatchList so other tabs (like Search) can add achievements
+ns.AddToWatchList = function(id)
+    AddToWatchList(id)
+end
 
 -- ============================================================================
 -- Alt+Click Hook (AchievementTemplateMixin.ProcessClick for 12.0+)

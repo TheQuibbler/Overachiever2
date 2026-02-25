@@ -12,6 +12,10 @@ Localization.lua
 Data.lua
 DBNpc.lua
 Scanner.lua
+AchSearch.lua
 Options.lua
 Core.lua
 Tooltips.lua
+
+# Testing (can be removed in production)
+TEST_AchSearch.lua

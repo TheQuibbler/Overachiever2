@@ -229,6 +229,7 @@ end
             - topOffset (number): Extra vertical padding from the top of parent. Default: 0
             - showRemoveButton (boolean): Show a red X button on each row. Default: false
             - onRemove (function(id)): Callback when the remove button is clicked.
+            - enableAltClickAddToWatch (boolean): Enable Alt+Click to add achievement to Watch tab. Default: false
             - emptyText (string): Text shown when the list is empty.
                 Default: "No achievements to display."
 
@@ -244,6 +245,7 @@ function ns.CreateAchievementList(parent, options)
     local topOffset = options.topOffset or 0
     local showRemoveButton = options.showRemoveButton or false
     local onRemove = options.onRemove
+    local enableAltClickAddToWatch = options.enableAltClickAddToWatch or false
 
     local controller = {}
     local currentData = {}
@@ -289,6 +291,13 @@ function ns.CreateAchievementList(parent, options)
                         onRemove(self.id)
                     end
                     return
+                end
+                -- Alt+Click to add to Watch list (if enabled)
+                if enableAltClickAddToWatch and IsAltKeyDown() and buttonName == "LeftButton" and self.id then
+                    if ns.AddToWatchList then
+                        ns.AddToWatchList(self.id)
+                        return
+                    end
                 end
                 -- Handle modifier clicks (chat link, tracking) via original ProcessClick logic
                 local handled = false

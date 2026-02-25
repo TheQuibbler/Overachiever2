@@ -14,3 +14,4 @@ Localization.lua
 Tabs.lua
 AchievementList.lua
 Watch.lua
+Search.lua
