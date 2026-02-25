@@ -8,6 +8,9 @@ Instead, if you are authoring a PR for the main branch, add your release note to
 
 [NEW_RELEASE_NOTES.md](./NEW_RELEASE_NOTES.md).
 
+## 0.3.0
+- Advanced Search Tab: Find achievements using keywords and filters not supported by the default UI.
+
 ## 0.2.1
 - Full Simplified Chinese (zhCN) support
 - Full Traditional Chinese (zhTW) support
