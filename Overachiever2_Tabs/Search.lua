@@ -298,6 +298,9 @@ local function InitSearch(self)
     IncludeUnlistedCheckbox:SetPoint("TOPLEFT", typeDropdown, "BOTTOMLEFT", 0, -8)
     IncludeUnlistedCheckbox.Text:SetText(ns.L["SEARCH_INCLUDE_UNLISTED"])
     IncludeUnlistedCheckbox.Text:SetFontObject("GameFontHighlight")
+    IncludeUnlistedCheckbox.Text:SetWidth(150)  -- Set max width, text will wrap
+    IncludeUnlistedCheckbox.Text:SetWordWrap(true)  -- Enable word wrapping
+    IncludeUnlistedCheckbox.Text:SetJustifyH("LEFT")  -- Left align the text
     IncludeUnlistedCheckbox:SetChecked(includeUnlisted)
     IncludeUnlistedCheckbox:SetScript("OnClick", ToggleIncludeUnlisted)
     IncludeUnlistedCheckbox:SetScript("OnEnter", function(self)
