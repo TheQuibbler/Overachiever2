@@ -22,11 +22,12 @@ Please note that **Overachiever2** is currently in active development. While it 
   * **Chat Link Support:** These enhanced tooltips also work when you hover over achievement links in the chat window.
 * **The "Watch" Tab**
   * A dedicated tab within the Achievement UI to manage and track achievements you want to focus on (Like a "Favorites" list).
+* **The "Search" Tab**
+  * Advanced Search Engine: Query achievements using keywords and filters unavailable in the standard UI—including hidden achievements.
 * **Meta-Achievement Integration**
   * Simply mouse over sub-achievements within a Meta-Achievement window to see their specific tooltips instantly.
-* **Monster/NPC Tooltips (Work in Progress)**
+* **Monster/NPC Tooltips**
   * Provides achievement-related info when hovering over NPCs. 
-  * *Note: This feature is currently under active development and is being refined.*
 
 ---
 
