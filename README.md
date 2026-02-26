@@ -13,7 +13,7 @@ Please note that **Overachiever2** is currently in active development. While it 
 
 ---
 
-## ✨ Currently Implemented Features
+## Currently Implemented Features
 
 * **Enhanced Achievement Tooltips**
   * No more opening the massive Achievement UI to check your progress.
@@ -28,7 +28,18 @@ Please note that **Overachiever2** is currently in active development. While it 
 * **Meta-Achievement Integration**
   * Simply mouse over sub-achievements within a Meta-Achievement window to see their specific tooltips instantly.
 * **Monster/NPC Tooltips**
-  * Provides achievement-related info when hovering over NPCs. 
+  * Provides achievement-related info when hovering over NPCs.
+
+## Supported Languages
+
+* English
+* Korean
+* Simplified Chinese
+* Traditional Chinese
+* German
+* French
+* Russian
+* Spanish
 
 ---
 
