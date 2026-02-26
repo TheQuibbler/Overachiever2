@@ -18,7 +18,8 @@ Please note that **Overachiever2** is currently in active development. While it 
 * **Enhanced Achievement Tooltips**
   * No more opening the massive Achievement UI to check your progress.
   * **Full Criteria Listing:** Shows all requirements/criteria directly on the tooltip.
-  * **Series Support:** Displays the entire series of related achievements in one view.
+  * **Series:** Displays the entire series of related achievements in one view.
+  * **Parent achievements:** Display its parent achievements.
   * **Chat Link Support:** These enhanced tooltips also work when you hover over achievement links in the chat window.
 * **The "Watch" Tab**
   * A dedicated tab within the Achievement UI to manage and track achievements you want to focus on (Like a "Favorites" list).
