@@ -120,9 +120,11 @@ local function OnTooltipSetUnit(tooltip, data)
     local okP, isPlayer = pcall(UnitIsPlayer, unit)
     if okP and isPlayer then return end
 
-    local matches = ns.GetUnitAchievements(unit)
-    for _, match in ipairs(matches) do
-        AddAchievementLine(tooltip, match)
+    if Overachiever2_Settings.EnableNPCTooltip then
+        local matches = ns.GetUnitAchievements(unit)
+        for _, match in ipairs(matches) do
+            AddAchievementLine(tooltip, match)
+        end
     end
 
     -- Show NPC ID if available (Debug Mode Only)

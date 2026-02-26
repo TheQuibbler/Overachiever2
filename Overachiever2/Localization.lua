@@ -31,6 +31,9 @@ L["SCANNER_REBUILT"] = "Achievement scanner memory rebuilt."
 L["OPT_DEBUG_TITLE"] = "Tooltip ID Display (Debug Mode)"
 L["OPT_DEBUG_DESC"] = "Show NPC, Item, and Achievement IDs in tooltips."
 
+L["OPT_NPC_TOOLTIP_TITLE"] = "Enable NPC tooltip"
+L["OPT_NPC_TOOLTIP_DESC"] = "Show achievement progress lines when hovering over NPCs."
+
 L["SERIESTIP"] = "Part of a series:"
 L["CRITERIA_OF"] = "Criteria of:"
 
@@ -56,6 +59,9 @@ if locale == "koKR" then
     L["OPT_DEBUG_TITLE"] = "툴팁 ID 표시 (디버그 모드)"
     L["OPT_DEBUG_DESC"] = "NPC, 아이템, 업적 ID를 툴팁에 추가로 표시합니다."
 
+    L["OPT_NPC_TOOLTIP_TITLE"] = "NPC 툴팁 활성화"
+    L["OPT_NPC_TOOLTIP_DESC"] = "NPC에 마우스를 올렸을 때 업적 진행 상황을 표시합니다."
+
     L["SERIESTIP"] = "업적 세트:"
     L["CRITERIA_OF"] = "다음의 조건:"
 end
@@ -79,6 +85,9 @@ if locale == "zhCN" then
 
     L["OPT_DEBUG_TITLE"] = "显示提示信息ID（调试模式）"
     L["OPT_DEBUG_DESC"] = "在提示信息中显示NPC、物品与成就的ID。"
+
+    L["OPT_NPC_TOOLTIP_TITLE"] = "启用NPC提示信息"
+    L["OPT_NPC_TOOLTIP_DESC"] = "鼠标悬停在NPC上时显示成就进度。"
 
     L["SERIESTIP"] = "系列成就的一部分："
     L["CRITERIA_OF"] = "条件所属："
@@ -104,6 +113,9 @@ if locale == "zhTW" then
     L["OPT_DEBUG_TITLE"] = "顯示提示資訊ID（除錯模式）"
     L["OPT_DEBUG_DESC"] = "在提示資訊中顯示NPC、物品與成就的ID。"
 
+    L["OPT_NPC_TOOLTIP_TITLE"] = "啟用NPC提示資訊"
+    L["OPT_NPC_TOOLTIP_DESC"] = "滑鼠懸停在NPC上時顯示成就進度。"
+
     L["SERIESTIP"] = "系列成就的一部分："
     L["CRITERIA_OF"] = "條件所屬："
 end
@@ -127,6 +139,9 @@ if locale == "deDE" then
 
     L["OPT_DEBUG_TITLE"] = "Tooltip-ID-Anzeige (Debug-Modus)"
     L["OPT_DEBUG_DESC"] = "NPC-, Gegenstands- und Erfolgs-IDs in Tooltips anzeigen."
+
+    L["OPT_NPC_TOOLTIP_TITLE"] = "NPC-Tooltip aktivieren"
+    L["OPT_NPC_TOOLTIP_DESC"] = "Erfolgsfortschritt anzeigen, wenn die Maus über einen NPC bewegt wird."
 
     L["SERIESTIP"] = "Teil einer Serie:"
     L["CRITERIA_OF"] = "Kriterium von:"
@@ -152,6 +167,9 @@ if locale == "frFR" then
     L["OPT_DEBUG_TITLE"] = "Affichage des ID dans les infobulles (Mode débogage)"
     L["OPT_DEBUG_DESC"] = "Afficher les ID des PNJ, objets et hauts faits dans les infobulles."
 
+    L["OPT_NPC_TOOLTIP_TITLE"] = "Activer l'infobulle PNJ"
+    L["OPT_NPC_TOOLTIP_DESC"] = "Afficher la progression des hauts faits au survol des PNJ."
+
     L["SERIESTIP"] = "Fait partie d'une série :"
     L["CRITERIA_OF"] = "Critère de :"
 end
@@ -176,6 +194,9 @@ if locale == "ruRU" then
     L["OPT_DEBUG_TITLE"] = "Отображение ID в подсказках (Режим отладки)"
     L["OPT_DEBUG_DESC"] = "Показывать ID НПС, предметов и достижений в подсказках."
 
+    L["OPT_NPC_TOOLTIP_TITLE"] = "Включить подсказки для НПС"
+    L["OPT_NPC_TOOLTIP_DESC"] = "Показывать прогресс достижений при наведении на НПС."
+
     L["SERIESTIP"] = "Часть серии:"
     L["CRITERIA_OF"] = "Критерий для:"
 end
@@ -199,6 +220,9 @@ if locale == "esES" or locale == "esMX" then
 
     L["OPT_DEBUG_TITLE"] = "Mostrar ID en información emergente (Modo de depuración)"
     L["OPT_DEBUG_DESC"] = "Mostrar ID de PNJ, objetos y logros en la información emergente."
+
+    L["OPT_NPC_TOOLTIP_TITLE"] = "Activar información emergente de PNJ"
+    L["OPT_NPC_TOOLTIP_DESC"] = "Mostrar el progreso de logros al pasar el cursor sobre los PNJ."
 
     L["SERIESTIP"] = "Parte de una serie:"
     L["CRITERIA_OF"] = "Criterio de:"
