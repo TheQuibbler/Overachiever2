@@ -285,9 +285,10 @@ function ns.CreateAchievementList(parent, options)
             button.oaClickHooked = true
             button:RegisterForClicks("LeftButtonUp", "RightButtonUp")
             button:SetScript("OnClick", function(self, buttonName, down)
-                -- Right-click to remove (when remove button is enabled)
+                -- Right-click actions
                 if buttonName == "RightButton" then
-                    if showRemoveButton and onRemove and self.id then
+                    -- Remove from the list (when remove button is enabled)
+                    if showRemoveButton and IsAltKeyDown() and onRemove and self.id then
                         onRemove(self.id)
                     end
                     return
