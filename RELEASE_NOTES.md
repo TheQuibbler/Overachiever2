@@ -8,6 +8,9 @@ Instead, if you are authoring a PR for the main branch, add your release note to
 
 [NEW_RELEASE_NOTES.md](./NEW_RELEASE_NOTES.md).
 
+## 0.3.4
+- Add an option for NPC tooltip
+
 ## 0.3.3
 - Remove shortcut is now Alt+Right click
 
