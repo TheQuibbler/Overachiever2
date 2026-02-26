@@ -11,6 +11,7 @@ Utils.lua
 Localization.lua
 Data.lua
 DBNpc.lua
+DBMeta.lua
 Scanner.lua
 AchSearch.lua
 Options.lua

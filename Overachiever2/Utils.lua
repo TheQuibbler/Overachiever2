@@ -71,8 +71,8 @@ function Utils.AchievementIconSpacerText()
     return "|T" .. Utils.AchievementIconPath .. ":0::::256:256:0:0:0:0|t"
 end
 
-function Utils.GrayDotIconText()
-    return "|cff888888•|r"
+function Utils.DotIconText()
+    return "•"
 end
 
 function Utils.CheckAtlasText()

@@ -32,6 +32,7 @@ L["OPT_DEBUG_TITLE"] = "Tooltip ID Display (Debug Mode)"
 L["OPT_DEBUG_DESC"] = "Show NPC, Item, and Achievement IDs in tooltips."
 
 L["SERIESTIP"] = "Part of a series:"
+L["CRITERIA_OF"] = "Criteria of:"
 
 local locale = GetLocale()
 
@@ -55,7 +56,8 @@ if locale == "koKR" then
     L["OPT_DEBUG_TITLE"] = "툴팁 ID 표시 (디버그 모드)"
     L["OPT_DEBUG_DESC"] = "NPC, 아이템, 업적 ID를 툴팁에 추가로 표시합니다."
 
-    L["SERIESTIP"] = "업적 세트:";
+    L["SERIESTIP"] = "업적 세트:"
+    L["CRITERIA_OF"] = "다음의 조건:"
 end
 
 -- ============================================================================
@@ -79,6 +81,7 @@ if locale == "zhCN" then
     L["OPT_DEBUG_DESC"] = "在提示信息中显示NPC、物品与成就的ID。"
 
     L["SERIESTIP"] = "系列成就的一部分："
+    L["CRITERIA_OF"] = "条件所属："
 end
 
 -- ============================================================================
@@ -102,6 +105,7 @@ if locale == "zhTW" then
     L["OPT_DEBUG_DESC"] = "在提示資訊中顯示NPC、物品與成就的ID。"
 
     L["SERIESTIP"] = "系列成就的一部分："
+    L["CRITERIA_OF"] = "條件所屬："
 end
 
 -- ============================================================================
@@ -125,6 +129,7 @@ if locale == "deDE" then
     L["OPT_DEBUG_DESC"] = "NPC-, Gegenstands- und Erfolgs-IDs in Tooltips anzeigen."
 
     L["SERIESTIP"] = "Teil einer Serie:"
+    L["CRITERIA_OF"] = "Kriterium von:"
 end
 
 -- ============================================================================
@@ -148,6 +153,7 @@ if locale == "frFR" then
     L["OPT_DEBUG_DESC"] = "Afficher les ID des PNJ, objets et hauts faits dans les infobulles."
 
     L["SERIESTIP"] = "Fait partie d'une série :"
+    L["CRITERIA_OF"] = "Critère de :"
 end
 
 -- ============================================================================
@@ -171,6 +177,7 @@ if locale == "ruRU" then
     L["OPT_DEBUG_DESC"] = "Показывать ID НПС, предметов и достижений в подсказках."
 
     L["SERIESTIP"] = "Часть серии:"
+    L["CRITERIA_OF"] = "Критерий для:"
 end
 
 -- ============================================================================
@@ -194,4 +201,5 @@ if locale == "esES" or locale == "esMX" then
     L["OPT_DEBUG_DESC"] = "Mostrar ID de PNJ, objetos y logros en la información emergente."
 
     L["SERIESTIP"] = "Parte de una serie:"
+    L["CRITERIA_OF"] = "Criterio de:"
 end

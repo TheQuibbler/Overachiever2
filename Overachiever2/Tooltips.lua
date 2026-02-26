@@ -25,7 +25,7 @@ local function AddAchievementLine(tooltip, match)
         critName = match.criteriaString
     end
     critName = match.criteriaCompleted and Utils.WhiteText(critName) or Utils.GrayText(critName)
-    critName = Utils.AchievementIconSpacerText() .. " " .. Utils.GrayDotIconText() .. " " .. critName
+    critName = Utils.AchievementIconSpacerText() .. " " .. Utils.GrayText(Utils.DotIconText()) .. " " .. critName
     local critStatusStr = match.criteriaCompleted and Utils.CheckAtlasText() or Utils.RedxAtlasText()
     if Overachiever2_Settings.Debug then
         critName = critName .. " [critID: " .. match.criteriaID .. "]"
@@ -247,6 +247,28 @@ local function OnTooltipSetAchievement(tooltip, data)
             tooltip:AddLine(curAchName, r, g, b, false) -- false = don't wrap lines
             curAchID, curCompleted = GetNextAchievement(curAchID)
             curAchNum = curAchNum + 1
+        end
+    end
+
+    -- Criteria of
+    local entries = ns.DB.Meta[achID]
+    if entries then
+        tooltip:AddLine(" ") -- Spacing
+        tooltip:AddLine(ns.L["CRITERIA_OF"])
+        for _, parentAchID in ipairs(entries) do
+            local _, name, _, completed = GetAchievementInfo(parentAchID)
+            local color;
+            if (completed) then
+                color = COLOR_COMPLETE
+                name = name .. " " .. Utils.CheckAtlasText()
+            else
+                color = COLOR_GRAY
+            end
+
+            name = Utils.DotIconText() .. " " .. name
+
+            local r, g, b = color:GetRGB()
+            tooltip:AddLine(name, r, g, b, false) -- false = don't wrap lines
         end
     end
 
