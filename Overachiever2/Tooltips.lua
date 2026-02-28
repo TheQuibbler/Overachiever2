@@ -3,6 +3,9 @@
 
 local _, ns = ...
 
+Overachiever2 = Overachiever2 or {}
+Overachiever2.Utils = Overachiever2.Utils or {}
+
 local Utils = Overachiever2.Utils
 
 local COLOR_COMPLETE = CreateColorFromHexString(Utils.BlizzardGreenColor)
@@ -19,18 +22,21 @@ local function AddAchievementLine(tooltip, match)
     end
     tooltip:AddDoubleLine(Utils.AchievementIconText() .. " " .. Utils.BlizzardGoldText(achName), achStatusStr)
 
-    -- Some criteria return an empty string, so we need to handle that.
-    local critName = "???"
+    -- The match result may not contain a valid criteria name.
+    -- This means there's no valid criteria info. We don't display criteria info in this case.
+    local critName = nil
     if match.criteriaString and match.criteriaString ~= "" then
         critName = match.criteriaString
     end
-    critName = match.criteriaCompleted and Utils.WhiteText(critName) or Utils.GrayText(critName)
-    critName = Utils.AchievementIconSpacerText() .. " " .. Utils.GrayText(Utils.DotIconText()) .. " " .. critName
-    local critStatusStr = match.criteriaCompleted and Utils.CheckAtlasText() or Utils.RedxAtlasText()
-    if Overachiever2_Settings.Debug then
-        critName = critName .. " [critID: " .. match.criteriaID .. "]"
+    if critName then
+        critName = match.criteriaCompleted and Utils.WhiteText(critName) or Utils.GrayText(critName)
+        critName = Utils.AchievementIconSpacerText() .. " " .. Utils.GrayText(Utils.DotIconText()) .. " " .. critName
+        local critStatusStr = match.criteriaCompleted and Utils.CheckAtlasText() or Utils.RedxAtlasText()
+        if Overachiever2_Settings.Debug then
+            critName = critName .. " [critID: " .. match.criteriaID .. "]"
+        end
+        tooltip:AddDoubleLine(critName, critStatusStr)
     end
-    tooltip:AddDoubleLine(critName, critStatusStr)
 end
 
 -- Helper: Add all criteria lines for an achievement

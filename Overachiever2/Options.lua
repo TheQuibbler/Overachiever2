@@ -3,6 +3,9 @@
 
 local addonName, ns = ...
 
+Overachiever2 = Overachiever2 or {}
+Overachiever2.Utils = Overachiever2.Utils or {}
+
 local Utils = Overachiever2.Utils
 
 -- Default settings

@@ -40,10 +40,10 @@ function ns.GetUnitAchievements(unit)
             local _, achName, _, achCompleted = ns.GetAchievementInfo(achID)
             if achName then
                 -- Get criteria-specific completion via criteriaID
-                local criteriaString, _, critCompleted = GetAchievementCriteriaInfoByID(achID, criteriaID)
+                local criteriaString, _, critCompleted = ns.GetAchievementCriteriaInfoByID(achID, criteriaID)
                 -- Fallback to orderIndex-based lookup for localized name
                 if (not criteriaString or criteriaString == "") and orderIndex then
-                    criteriaString, _, critCompleted = GetAchievementCriteriaInfo(achID, orderIndex)
+                    criteriaString, _, critCompleted = ns.GetAchievementCriteriaInfo(achID, orderIndex)
                 end
                 table.insert(matches, {
                     achID = achID,
