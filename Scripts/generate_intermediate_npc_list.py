@@ -14,6 +14,7 @@ Scans for crit() calls and extracts NPC associations from these sources:
 """
 
 import os
+import sys
 import glob
 from collections import defaultdict
 
@@ -638,16 +639,33 @@ def write_output(npc_map, output_path):
 
 def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    db_dir = os.path.join(script_dir, 'resources', 'AllTheThings', 'db', 'Standard', 'Categories')
+    resources_dir = os.path.join(script_dir, 'resources')
+    db_dir = os.path.join(resources_dir, 'AllTheThings', 'db', 'Standard', 'Categories')
+
+    # Version check: compare .last_att_db_standard against .last_intermediate_npc_list.
+    # If they match, the ATT input hasn't changed since the last run — skip regeneration.
+    att_stamp_file = os.path.join(resources_dir, '.last_att_db_standard')
+    intermediate_stamp_file = os.path.join(resources_dir, '.last_intermediate_npc_list')
+
+    force = '--force' in sys.argv
+
+    if not force and os.path.exists(att_stamp_file) and os.path.exists(intermediate_stamp_file):
+        with open(att_stamp_file) as f:
+            att_stamp = f.read().strip()
+        with open(intermediate_stamp_file) as f:
+            intermediate_stamp = f.read().strip()
+        if att_stamp == intermediate_stamp:
+            print("✅ npc_list.txt is already up to date (ATT input unchanged). Use --force to regenerate.")
+            return
 
     if not os.path.isdir(db_dir):
         print(f"ERROR: Database directory not found: {db_dir}")
-        return
+        sys.exit(1)
 
     lua_files = glob.glob(os.path.join(db_dir, '*.lua'))
     if not lua_files:
         print(f"ERROR: No .lua files found in {db_dir}")
-        return
+        sys.exit(1)
 
     print(f"Found {len(lua_files)} database files in {db_dir}")
 
@@ -682,6 +700,13 @@ def main():
     output_path = os.path.join(output_dir, 'npc_list.txt')
     write_output(all_mappings, output_path)
     print(f"Output written to: {output_path}")
+
+    # Save version stamp: copy the ATT fingerprint so next run can skip if unchanged
+    if os.path.exists(att_stamp_file):
+        with open(att_stamp_file) as f:
+            stamp = f.read().strip()
+        with open(intermediate_stamp_file, 'w') as f:
+            f.write(stamp)
 
 
 if __name__ == '__main__':
