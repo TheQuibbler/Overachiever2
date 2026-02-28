@@ -4,10 +4,11 @@ Overachiever2 - Resource Downloader
 ================================================================================
 
 OVERVIEW:
-    This script downloads the DB2 CSV files from wago.tools and SilverDragon's
-    achievements.lua from GitHub, both required to generate npcAchievements.lua.
+    This script downloads the DB2 CSV files from wago.tools, SilverDragon's
+    achievements.lua from GitHub, and AllTheThings' db/Standard/Categories lua
+    files from GitHub, all required to generate npcAchievements.lua.
     All downloaded files are stored in a "resources" directory along with
-    version/hash information. The two download sources are checked independently.
+    version/hash information. The three download sources are checked independently.
 
 USAGE:
     Normal run (only downloads if updates are detected):
@@ -31,12 +32,19 @@ HOW UPDATE DETECTION WORKS:
        run. If they differ (or .last_build doesn't exist), fresh CSVs are
        downloaded.
 
+    3. AllTheThings db/Standard/Categories:
+       The GitHub Contents API returns a list of files with their git blob SHAs.
+       All filename:sha pairs are stored as JSON in resources/.last_att_db_standard.
+       If any file is added, removed, or modified, the stored fingerprint will
+       differ and all files are re-downloaded.
+
 DATA SOURCES:
     - Achievement.csv   : Achievement ID, name, and root CriteriaTree ID  (wago.tools)
     - CriteriaTree.csv  : Tree structure linking achievements to criteria   (wago.tools)
     - Criteria.csv      : Individual criteria with type, asset, criteriaID  (wago.tools)
     - ModifierTree.csv  : NPC ID lookup for emote-type criteria (Type 54)   (wago.tools)
     - achievements.lua  : Curated NPC→criteria mappings for Type 27         (SilverDragon/GitHub)
+    - db/Standard/Categories/*.lua : AllTheThings achievement/NPC data      (ATT/GitHub)
 
 OUTPUT:
     resources/Achievement.csv          - Downloaded CSV file
@@ -44,8 +52,10 @@ OUTPUT:
     resources/Criteria.csv             - Downloaded CSV file
     resources/ModifierTree.csv         - Downloaded CSV file
     resources/achievements.lua         - Downloaded SilverDragon file
+    resources/AllTheThings/db/Standard/Categories/*.lua - Downloaded ATT files
     resources/.last_build              - Last downloaded WoW build version
     resources/.last_silverdragon_sha   - Last downloaded SilverDragon git SHA
+    resources/.last_att_db_standard    - Last downloaded ATT file fingerprint (JSON)
 
 NEXT STEP:
     After downloading, run generate_npc_db.py to process these files and
@@ -97,6 +107,15 @@ SILVERDRAGON_API  = "https://api.github.com/repos/kemayo/wow-silverdragon/conten
 # Hidden file that persists the git SHA of the last downloaded SilverDragon file.
 # Tracked independently from the WoW build version.
 SILVERDRAGON_SHA_FILE = os.path.join(RESOURCES_DIR, ".last_silverdragon_sha")
+
+# AllTheThings db/Standard/Categories - lua files with achievement/NPC data.
+# The GitHub Contents API lists all files in the directory with their git SHAs.
+ATT_CATEGORIES_API = "https://api.github.com/repos/ATTWoWAddon/AllTheThings/contents/db/Standard/Categories"
+ATT_CATEGORIES_DIR = os.path.join(RESOURCES_DIR, "AllTheThings", "db", "Standard", "Categories")
+
+# Hidden file that stores a JSON fingerprint of all file SHAs in the ATT Categories directory.
+# If any file changes, is added, or removed, the fingerprint will differ.
+ATT_SHA_FILE = os.path.join(RESOURCES_DIR, ".last_att_db_standard")
 
 
 # ── Build Version Functions ───────────────────────────────────────────────────
@@ -239,6 +258,105 @@ def download_silverdragon():
         return False
 
 
+# ── AllTheThings Functions ────────────────────────────────────────────────────
+
+def get_remote_att_files():
+    """
+    Fetches the list of files in ATT's db/Standard/Categories from the GitHub API.
+
+    Uses the GitHub Contents API which returns an array of file objects, each
+    containing the filename, git blob SHA, and download URL.
+
+    Returns:
+        list: List of dicts with keys "name", "sha", "download_url".
+        None: If the request fails.
+    """
+    try:
+        req = urllib.request.Request(ATT_CATEGORIES_API, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            return [
+                {"name": item["name"], "sha": item["sha"], "download_url": item["download_url"]}
+                for item in data
+                if item["type"] == "file"
+            ]
+    except Exception as e:
+        print(f"⚠️  Failed to fetch ATT Categories listing: {e}")
+        return None
+
+
+def build_att_fingerprint(file_list):
+    """
+    Builds a JSON fingerprint string from a list of ATT file entries.
+
+    The fingerprint is a sorted JSON dict of {filename: sha} pairs.
+    It changes whenever any file is added, removed, or modified.
+
+    Args:
+        file_list (list): List of dicts with "name" and "sha" keys.
+
+    Returns:
+        str: JSON string representing the fingerprint.
+    """
+    sha_dict = {f["name"]: f["sha"] for f in file_list}
+    return json.dumps(sha_dict, sort_keys=True)
+
+
+def get_last_att_fingerprint():
+    """
+    Reads the ATT fingerprint from the last successful download.
+
+    Returns:
+        str: Previously saved fingerprint JSON string.
+        None: If the file does not exist (first run or never downloaded).
+    """
+    if os.path.exists(ATT_SHA_FILE):
+        with open(ATT_SHA_FILE) as f:
+            return f.read().strip()
+    return None
+
+
+def save_att_fingerprint(fingerprint):
+    """
+    Saves the ATT fingerprint after a successful download.
+
+    Args:
+        fingerprint (str): JSON fingerprint string to save.
+    """
+    with open(ATT_SHA_FILE, "w") as f:
+        f.write(fingerprint)
+
+
+def download_att_categories(file_list):
+    """
+    Downloads all files from ATT's db/Standard/Categories to the local directory.
+
+    Args:
+        file_list (list): List of dicts with "name" and "download_url" keys.
+
+    Returns:
+        bool: True if all files downloaded successfully, False otherwise.
+    """
+    os.makedirs(ATT_CATEGORIES_DIR, exist_ok=True)
+
+    for file_info in file_list:
+        filename = file_info["name"]
+        url = file_info["download_url"]
+        filepath = os.path.join(ATT_CATEGORIES_DIR, filename)
+        print(f"  Downloading: {filename} ...", end=" ", flush=True)
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                with open(filepath, "wb") as f:
+                    f.write(resp.read())
+            print("✅")
+        except Exception as e:
+            print(f"❌ Failed: {e}")
+            return False
+
+    return True
+
+
 # ── CSV Download ──────────────────────────────────────────────────────────────
 
 def download_csvs():
@@ -345,6 +463,45 @@ else:
     else:
         print("✅ CSVs downloaded.")
         print("⚠️  Could not save build number (will re-download on next run)\n")
+
+# ── 3. AllTheThings db/Standard/Categories ────────────────────────────────────
+print("--- AllTheThings db/Standard/Categories ---")
+print("Checking ATT Categories...", end=" ", flush=True)
+att_files = get_remote_att_files()
+
+if att_files:
+    remote_fingerprint = build_att_fingerprint(att_files)
+    print(f"{len(att_files)} files found")
+else:
+    remote_fingerprint = None
+    print("(unavailable)")
+
+local_fingerprint = get_last_att_fingerprint()
+
+if local_fingerprint:
+    local_count = len(json.loads(local_fingerprint))
+    print(f"Last downloaded:     {local_count} files")
+else:
+    print("Last downloaded:     (none - first run)")
+
+if not force and remote_fingerprint and remote_fingerprint == local_fingerprint:
+    print("✅ ATT Categories already up to date.\n")
+else:
+    if att_files is None:
+        print("⚠️  Cannot check for updates (offline?). Skipping.\n")
+    else:
+        if force:
+            print("🔄 Force download mode")
+        elif not local_fingerprint:
+            print("🆕 First download...")
+        else:
+            print("🆕 ATT Categories changed!")
+
+        if download_att_categories(att_files):
+            save_att_fingerprint(remote_fingerprint)
+            print(f"✅ {len(att_files)} ATT Categories files downloaded.\n")
+        else:
+            print("❌ ATT Categories download failed.\n")
 
 # ── Summary ───────────────────────────────────────────────────────────────────
 print(f"Resources directory: {RESOURCES_DIR}/")
