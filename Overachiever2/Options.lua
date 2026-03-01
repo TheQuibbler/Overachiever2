@@ -14,6 +14,9 @@ local function SetDefaultSettings()
     if Overachiever2_Settings.EnableNPCTooltip == nil then
         Overachiever2_Settings.EnableNPCTooltip = true
     end
+    if Overachiever2_Settings.EnableAchievementTooltip == nil then
+        Overachiever2_Settings.EnableAchievementTooltip = true
+    end
 end
 
 -- Modern Settings API (Retail / 10.0+)
@@ -29,6 +32,20 @@ local function RegisterOptions()
 
         local setting = Settings.RegisterProxySetting(category, "Overachiever2_" .. variable,
             Settings.VarType.Boolean, name, Overachiever2_Settings.EnableNPCTooltip,
+            function() return Overachiever2_Settings[variable] end,
+            function(value) Overachiever2_Settings[variable] = value end)
+
+        Settings.CreateCheckbox(category, setting, tooltip)
+    end
+
+    -- Enable Achievement Tooltip checkbox
+    do
+        local variable = "EnableAchievementTooltip"
+        local name = ns.L["OPT_ACH_TOOLTIP_TITLE"]
+        local tooltip = ns.L["OPT_ACH_TOOLTIP_DESC"]
+
+        local setting = Settings.RegisterProxySetting(category, "Overachiever2_" .. variable,
+            Settings.VarType.Boolean, name, Overachiever2_Settings.EnableAchievementTooltip,
             function() return Overachiever2_Settings[variable] end,
             function(value) Overachiever2_Settings[variable] = value end)
 

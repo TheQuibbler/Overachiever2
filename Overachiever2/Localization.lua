@@ -34,6 +34,9 @@ L["OPT_DEBUG_DESC"] = "Show NPC, Item, and Achievement IDs in tooltips."
 L["OPT_NPC_TOOLTIP_TITLE"] = "Enable NPC tooltip"
 L["OPT_NPC_TOOLTIP_DESC"] = "Show achievement progress lines when hovering over NPCs."
 
+L["OPT_ACH_TOOLTIP_TITLE"] = "Enable achievement tooltip"
+L["OPT_ACH_TOOLTIP_DESC"] = "Show enhanced achievement tooltips with additional details."
+
 L["SERIESTIP"] = "Part of a series:"
 L["CRITERIA_OF"] = "Criteria of:"
 
@@ -62,6 +65,9 @@ if locale == "koKR" then
     L["OPT_NPC_TOOLTIP_TITLE"] = "NPC 툴팁 활성화"
     L["OPT_NPC_TOOLTIP_DESC"] = "NPC에 마우스를 올렸을 때 업적 진행 상황을 표시합니다."
 
+    L["OPT_ACH_TOOLTIP_TITLE"] = "업적 툴팁 활성화"
+    L["OPT_ACH_TOOLTIP_DESC"] = "추가 정보가 포함된 향상된 업적 툴팁을 표시합니다."
+
     L["SERIESTIP"] = "업적 세트:"
     L["CRITERIA_OF"] = "다음의 조건:"
 end
@@ -88,6 +94,9 @@ if locale == "zhCN" then
 
     L["OPT_NPC_TOOLTIP_TITLE"] = "启用NPC提示信息"
     L["OPT_NPC_TOOLTIP_DESC"] = "鼠标悬停在NPC上时显示成就进度。"
+
+    L["OPT_ACH_TOOLTIP_TITLE"] = "启用成就提示信息"
+    L["OPT_ACH_TOOLTIP_DESC"] = "显示包含额外详情的增强成就提示信息。"
 
     L["SERIESTIP"] = "系列成就的一部分："
     L["CRITERIA_OF"] = "条件所属："
@@ -116,6 +125,9 @@ if locale == "zhTW" then
     L["OPT_NPC_TOOLTIP_TITLE"] = "啟用NPC提示資訊"
     L["OPT_NPC_TOOLTIP_DESC"] = "滑鼠懸停在NPC上時顯示成就進度。"
 
+    L["OPT_ACH_TOOLTIP_TITLE"] = "啟用成就提示資訊"
+    L["OPT_ACH_TOOLTIP_DESC"] = "顯示包含額外詳情的增強成就提示資訊。"
+
     L["SERIESTIP"] = "系列成就的一部分："
     L["CRITERIA_OF"] = "條件所屬："
 end
@@ -142,6 +154,9 @@ if locale == "deDE" then
 
     L["OPT_NPC_TOOLTIP_TITLE"] = "NPC-Tooltip aktivieren"
     L["OPT_NPC_TOOLTIP_DESC"] = "Erfolgsfortschritt anzeigen, wenn die Maus über einen NPC bewegt wird."
+
+    L["OPT_ACH_TOOLTIP_TITLE"] = "Erfolgs-Tooltip aktivieren"
+    L["OPT_ACH_TOOLTIP_DESC"] = "Erweiterte Erfolgs-Tooltips mit zusätzlichen Details anzeigen."
 
     L["SERIESTIP"] = "Teil einer Serie:"
     L["CRITERIA_OF"] = "Kriterium von:"
@@ -170,6 +185,9 @@ if locale == "frFR" then
     L["OPT_NPC_TOOLTIP_TITLE"] = "Activer l'infobulle PNJ"
     L["OPT_NPC_TOOLTIP_DESC"] = "Afficher la progression des hauts faits au survol des PNJ."
 
+    L["OPT_ACH_TOOLTIP_TITLE"] = "Activer l'infobulle de haut fait"
+    L["OPT_ACH_TOOLTIP_DESC"] = "Afficher des infobulles de hauts faits améliorées avec des détails supplémentaires."
+
     L["SERIESTIP"] = "Fait partie d'une série :"
     L["CRITERIA_OF"] = "Critère de :"
 end
@@ -197,6 +215,9 @@ if locale == "ruRU" then
     L["OPT_NPC_TOOLTIP_TITLE"] = "Включить подсказки для НПС"
     L["OPT_NPC_TOOLTIP_DESC"] = "Показывать прогресс достижений при наведении на НПС."
 
+    L["OPT_ACH_TOOLTIP_TITLE"] = "Включить подсказки достижений"
+    L["OPT_ACH_TOOLTIP_DESC"] = "Показывать расширенные подсказки достижений с дополнительными деталями."
+
     L["SERIESTIP"] = "Часть серии:"
     L["CRITERIA_OF"] = "Критерий для:"
 end
@@ -223,6 +244,9 @@ if locale == "esES" or locale == "esMX" then
 
     L["OPT_NPC_TOOLTIP_TITLE"] = "Activar información emergente de PNJ"
     L["OPT_NPC_TOOLTIP_DESC"] = "Mostrar el progreso de logros al pasar el cursor sobre los PNJ."
+
+    L["OPT_ACH_TOOLTIP_TITLE"] = "Activar información emergente de logros"
+    L["OPT_ACH_TOOLTIP_DESC"] = "Mostrar información emergente mejorada de logros con detalles adicionales."
 
     L["SERIESTIP"] = "Parte de una serie:"
     L["CRITERIA_OF"] = "Criterio de:"

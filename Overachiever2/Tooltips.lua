@@ -161,6 +161,8 @@ end
 
 -- 3. Achievement Tooltips (Links in chat)
 local function OnTooltipSetAchievement(tooltip, data)
+    if not Overachiever2_Settings.EnableAchievementTooltip then return end
+
     local achID = data.id
     if not achID then return end
 
@@ -327,6 +329,8 @@ end
 
 -- 5. Main Achievement List Tooltips
 local function OnAchievementListEnter(self)
+    if not Overachiever2_Settings.EnableAchievementTooltip then return end
+
     local achID = self.id
     if not achID then return end
 
