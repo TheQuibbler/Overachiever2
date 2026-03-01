@@ -3,13 +3,13 @@
 ## Version: 0.4.1
 ## Author: z3moon (Based on Tuhljin's Overachiever)
 ## Notes: Tools and tweaks to make Seeking achievements easier. (Modernized for 12.0.1)
-## SavedVariables: Overachiever2_Settings, Overachiever2_DB
+## SavedVariables: Overachiever2_Settings
 
 # Core Files
+Init.lua
 Compat.lua
 Utils.lua
 Localization.lua
-Data.lua
 DBNpc.lua
 DBMeta.lua
 Scanner.lua

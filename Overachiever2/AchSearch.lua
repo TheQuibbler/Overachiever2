@@ -4,8 +4,6 @@
 
 local addonName, ns = ...
 
--- Export to global namespace
-Overachiever2 = Overachiever2 or {}
 local OA2 = Overachiever2
 
 -- Local references for performance

@@ -3,12 +3,7 @@
 
 local addonName, ns = ...
 
-Overachiever2 = Overachiever2 or {}
-Overachiever2.Utils = Overachiever2.Utils or {}
-Overachiever2_Settings = Overachiever2_Settings or {}
-
 local Utils = Overachiever2.Utils
-
 
 local function OnEvent(self, event, ...)
     if event == "ADDON_LOADED" and ... == addonName then
