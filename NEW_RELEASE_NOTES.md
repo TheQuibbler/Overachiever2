@@ -3,4 +3,3 @@
 **If you are merging a PR into main**: please add the release note below, under the *Release notes for next branch cut*.
 
 ## Release notes for next branch cut
-- - Add an option for achievement tooltip

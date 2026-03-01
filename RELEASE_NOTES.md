@@ -8,6 +8,9 @@ Instead, if you are authoring a PR for the main branch, add your release note to
 
 [NEW_RELEASE_NOTES.md](./NEW_RELEASE_NOTES.md).
 
+## 0.4.2
+- - Add an option for achievement tooltip
+
 ## 0.4.1
 - Resolved an issue where NPC tooltips would fail if no valid achievement criteria were found.
 
