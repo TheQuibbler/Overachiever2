@@ -21,6 +21,10 @@ Please note that **Overachiever2** is currently in active development. While it 
   * **Series:** Displays the entire series of related achievements in one view.
   * **Parent achievements:** Display its parent achievements.
   * **Chat Link Support:** These enhanced tooltips also work when you hover over achievement links in the chat window.
+* **New Context Menus**
+  * Right-click any achievement to reveal a new actions menu.
+  * Instantly link to chat, add to your Watch List, or toggle tracking.
+  * Quickly jump to related meta-achievements or others in the same series.
 * **The "Watch" Tab**
   * A dedicated tab within the Achievement UI to manage and track achievements you want to focus on (Like a "Favorites" list).
 * **The "Search" Tab**
