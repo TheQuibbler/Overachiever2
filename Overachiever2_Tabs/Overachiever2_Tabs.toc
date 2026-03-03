@@ -12,6 +12,7 @@
 
 Localization.lua
 Tabs.lua
+ContextMenu.lua
 AchievementList.lua
 Watch.lua
 Search.lua

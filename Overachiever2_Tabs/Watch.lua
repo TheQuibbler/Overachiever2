@@ -195,6 +195,14 @@ ns.AddToWatchList = function(id)
     AddToWatchList(id)
 end
 
+ns.RemoveFromWatchList = function(id)
+    RemoveFromWatchList(id)
+end
+
+ns.IsWatchTabShown = function()
+    return frame and frame:IsShown()
+end
+
 -- ============================================================================
 -- Alt+Click Hook (AchievementTemplateMixin.ProcessClick for 12.0+)
 -- ============================================================================
@@ -210,3 +218,5 @@ if AchievementTemplateMixin and AchievementTemplateMixin.ProcessClick then
         return orig_ProcessClick(self, buttonName, down)
     end
 end
+
+

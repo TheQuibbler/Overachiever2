@@ -290,6 +290,8 @@ function ns.CreateAchievementList(parent, options)
                     -- Remove from the list (when remove button is enabled)
                     if showRemoveButton and IsAltKeyDown() and onRemove and self.id then
                         onRemove(self.id)
+                    elseif self.id and ns.ContextMenu then
+                        ns.ContextMenu.ShowForAchievement(self.id, self)
                     end
                     return
                 end

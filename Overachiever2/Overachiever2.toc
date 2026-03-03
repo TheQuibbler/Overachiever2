@@ -17,6 +17,7 @@ AchSearch.lua
 Options.lua
 Core.lua
 Tooltips.lua
+ContextMenu.lua
 
 # Testing (can be removed in production)
 TEST_AchSearch.lua
