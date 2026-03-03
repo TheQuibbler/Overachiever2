@@ -193,10 +193,14 @@ ns.ContextMenu.RegisterAchievementProvider(function(achievementID)
 
     local items = {}
     for _, parentID in ipairs(parents) do
-        local _, name = GetAchievementInfo(parentID)
+        local _, name, _, completed = GetAchievementInfo(parentID)
         if name then
+            local label = name
+            if completed then
+                label = label .. " " .. Utils.CheckAtlasText()
+            end
             table.insert(items, {
-                text = name,
+                text = label,
                 onClick = function()
                     if AchievementFrame_SelectAchievement then
                         AchievementFrame_SelectAchievement(parentID)
