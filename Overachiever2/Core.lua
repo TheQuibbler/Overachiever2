@@ -5,8 +5,9 @@ local addonName, ns = ...
 
 local Utils = Overachiever2.Utils
 
--- Expose internal DB on the global table for child addons (e.g. Overachiever2_Tabs)
+-- Expose internal tables on the global table for child addons (e.g. Overachiever2_Tabs)
 Overachiever2.DB = ns.DB
+Overachiever2.L = ns.L
 
 local function OnEvent(self, event, ...)
     if event == "ADDON_LOADED" and ... == addonName then

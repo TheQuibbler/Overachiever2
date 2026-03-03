@@ -6,6 +6,7 @@ local _, ns = ...
 
 local Overachiever2 = _G["Overachiever2"]
 local Utils = Overachiever2 and Overachiever2.Utils
+local OA2_L = Overachiever2 and Overachiever2.L
 
 ---------------------------------------------------------------------------
 -- Achievement-specific provider registry
@@ -62,7 +63,7 @@ ns.ContextMenu.RegisterAchievementProvider(function(achievementID)
         },
         -- Link to Chat (always visible)
         {
-            text = "Link to Chat",
+            text = OA2_L["CTXMENU_LINK_CHAT"],
             onClick = function(ctx)
                 local link = GetAchievementLink(ctx.id)
                 if link then
@@ -83,7 +84,7 @@ ns.ContextMenu.RegisterAchievementProvider(function(achievementID)
         -- Add to/Remove from Watch List (always visible)
         { separator = true },
         {
-            text = "Add to Watch List",
+            text = OA2_L["CTXMENU_WATCH_ADD"],
             visible = function() return not ns.IsWatchTabShown or not ns.IsWatchTabShown() end,
             onClick = function(ctx)
                 if ns.AddToWatchList then
@@ -92,7 +93,7 @@ ns.ContextMenu.RegisterAchievementProvider(function(achievementID)
             end,
         },
         {
-            text = "Remove from Watch List",
+            text = OA2_L["CTXMENU_WATCH_REMOVE"],
             visible = function() return ns.IsWatchTabShown and ns.IsWatchTabShown() end,
             onClick = function(ctx)
                 if ns.RemoveFromWatchList then
@@ -102,14 +103,14 @@ ns.ContextMenu.RegisterAchievementProvider(function(achievementID)
         },
         -- Track/Untrack Achievement toggle (visible for incomplete achievements)
         {
-            text = "Track Achievement",
+            text = OA2_L["CTXMENU_TRACK"],
             visible = function(ctx) return IsAchievementIncomplete(ctx) and not IsTrackingAchievement(ctx) end,
             onClick = function(ctx)
                 C_ContentTracking.StartTracking(Enum.ContentTrackingType.Achievement, ctx.id)
             end,
         },
         {
-            text = "Untrack Achievement",
+            text = OA2_L["CTXMENU_UNTRACK"],
             visible = function(ctx) return IsAchievementIncomplete(ctx) and IsTrackingAchievement(ctx) end,
             onClick = function(ctx)
                 C_ContentTracking.StopTracking(Enum.ContentTrackingType.Achievement, ctx.id, Enum.ContentTrackingStopType.Manual)
@@ -166,13 +167,13 @@ ns.ContextMenu.RegisterAchievementProvider(function(achievementID)
 
     if #items == 1 then
         return {
-            { title = "Series" },
+            { title = OA2_L["SERIESTIP"] },
             items[1],
         }
     else
         return {
             {
-                text = "Series",
+                text = OA2_L["SERIESTIP"],
                 children = items,
             },
         }
@@ -210,14 +211,14 @@ ns.ContextMenu.RegisterAchievementProvider(function(achievementID)
     if #items == 1 then
         -- Single parent: show as a direct button
         return {
-            { title = "Part of" },
+            { title = OA2_L["CRITERIA_OF"] },
             items[1],
         }
     else
         -- Multiple parents: show as a submenu
         return {
             {
-                text = "Part of",
+                text = OA2_L["CRITERIA_OF"],
                 children = items,
             },
         }
