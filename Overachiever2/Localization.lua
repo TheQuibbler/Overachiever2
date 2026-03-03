@@ -38,7 +38,7 @@ L["OPT_ACH_TOOLTIP_TITLE"] = "Enable achievement tooltip"
 L["OPT_ACH_TOOLTIP_DESC"] = "Show enhanced achievement tooltips with additional details."
 
 L["SERIESTIP"] = "Part of a series"
-L["CRITERIA_OF"] = "Criteria of"
+L["META_ACHIEVEMENT"] = "Meta-achievement"
 
 L["CTXMENU_LINK_CHAT"] = "Link to Chat"
 L["CTXMENU_WATCH_ADD"] = "Add to Watch List"
@@ -75,7 +75,7 @@ if locale == "koKR" then
     L["OPT_ACH_TOOLTIP_DESC"] = "추가 정보가 포함된 향상된 업적 툴팁을 표시합니다."
 
     L["SERIESTIP"] = "업적 세트"
-    L["CRITERIA_OF"] = "다음의 조건"
+    L["META_ACHIEVEMENT"] = "상위 업적"
 
     L["CTXMENU_LINK_CHAT"] = "채팅에 링크"
     L["CTXMENU_WATCH_ADD"] = "관심 목록에 추가"
@@ -111,7 +111,7 @@ if locale == "zhCN" then
     L["OPT_ACH_TOOLTIP_DESC"] = "显示包含额外详情的增强成就提示信息。"
 
     L["SERIESTIP"] = "系列成就的一部分"
-    L["CRITERIA_OF"] = "条件所属"
+    L["META_ACHIEVEMENT"] = "综合成就"
 
     L["CTXMENU_LINK_CHAT"] = "链接到聊天"
     L["CTXMENU_WATCH_ADD"] = "添加到关注列表"
@@ -147,7 +147,7 @@ if locale == "zhTW" then
     L["OPT_ACH_TOOLTIP_DESC"] = "顯示包含額外詳情的增強成就提示資訊。"
 
     L["SERIESTIP"] = "系列成就的一部分"
-    L["CRITERIA_OF"] = "條件所屬"
+    L["META_ACHIEVEMENT"] = "綜合成就"
 
     L["CTXMENU_LINK_CHAT"] = "連結到聊天"
     L["CTXMENU_WATCH_ADD"] = "加入關注列表"
@@ -183,7 +183,7 @@ if locale == "deDE" then
     L["OPT_ACH_TOOLTIP_DESC"] = "Erweiterte Erfolgs-Tooltips mit zusätzlichen Details anzeigen."
 
     L["SERIESTIP"] = "Teil einer Serie"
-    L["CRITERIA_OF"] = "Kriterium von"
+    L["META_ACHIEVEMENT"] = "Meta-Erfolg"
 
     L["CTXMENU_LINK_CHAT"] = "Im Chat verlinken"
     L["CTXMENU_WATCH_ADD"] = "Zur Beobachtungsliste hinzufügen"
@@ -219,7 +219,7 @@ if locale == "frFR" then
     L["OPT_ACH_TOOLTIP_DESC"] = "Afficher des infobulles de hauts faits améliorées avec des détails supplémentaires."
 
     L["SERIESTIP"] = "Fait partie d'une série"
-    L["CRITERIA_OF"] = "Critère de"
+    L["META_ACHIEVEMENT"] = "Méta haut fait"
 
     L["CTXMENU_LINK_CHAT"] = "Lier dans le chat"
     L["CTXMENU_WATCH_ADD"] = "Ajouter à la liste de suivi"
@@ -255,7 +255,7 @@ if locale == "ruRU" then
     L["OPT_ACH_TOOLTIP_DESC"] = "Показывать расширенные подсказки достижений с дополнительными деталями."
 
     L["SERIESTIP"] = "Часть серии"
-    L["CRITERIA_OF"] = "Критерий для"
+    L["META_ACHIEVEMENT"] = "Мета-достижение"
 
     L["CTXMENU_LINK_CHAT"] = "Ссылка в чат"
     L["CTXMENU_WATCH_ADD"] = "Добавить в список наблюдения"
@@ -291,7 +291,7 @@ if locale == "esES" or locale == "esMX" then
     L["OPT_ACH_TOOLTIP_DESC"] = "Mostrar información emergente mejorada de logros con detalles adicionales."
 
     L["SERIESTIP"] = "Parte de una serie"
-    L["CRITERIA_OF"] = "Criterio de"
+    L["META_ACHIEVEMENT"] = "Meta-logro"
 
     L["CTXMENU_LINK_CHAT"] = "Enlazar en el chat"
     L["CTXMENU_WATCH_ADD"] = "Añadir a lista de seguimiento"

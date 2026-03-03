@@ -211,14 +211,14 @@ ns.ContextMenu.RegisterAchievementProvider(function(achievementID)
     if #items == 1 then
         -- Single parent: show as a direct button
         return {
-            { title = OA2_L["CRITERIA_OF"] },
+            { title = OA2_L["META_ACHIEVEMENT"] },
             items[1],
         }
     else
         -- Multiple parents: show as a submenu
         return {
             {
-                text = OA2_L["CRITERIA_OF"],
+                text = OA2_L["META_ACHIEVEMENT"],
                 children = items,
             },
         }

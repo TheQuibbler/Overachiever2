@@ -261,7 +261,7 @@ local function OnTooltipSetAchievement(tooltip, data)
     local entries = ns.DB.Meta[achID]
     if entries then
         tooltip:AddLine(" ") -- Spacing
-        tooltip:AddLine(ns.L["CRITERIA_OF"])
+        tooltip:AddLine(ns.L["META_ACHIEVEMENT"])
         for _, parentAchID in ipairs(entries) do
             local _, name, _, completed = GetAchievementInfo(parentAchID)
             local color;
