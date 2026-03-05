@@ -499,8 +499,13 @@ def scan_providers(tokens, pos, array_npcs):
     """
     Starting at position pos (expecting = { ... }), extract NPC IDs from providers.
     Handles:
-      providers={{"n", 12345}, {"i", 99999}}  -> extracts 12345
+      providers={{"n", 12345}, {"i", 99999}}  -> extracts 12345 (NPC only)
       providers={a[40], a[41]}                 -> looks up array_npcs[40], [41]
+
+    Provider type tags:
+      "n" = NPC  (extracted)
+      "i" = Item (skipped)
+
     Returns list of NPC IDs.
     """
     length = len(tokens)
@@ -524,8 +529,8 @@ def scan_providers(tokens, pos, array_npcs):
         elif tokens[i][0] == TOK_LBRACE:
             depth += 1
             if depth == 2:
-                # Inline provider entry: {"n", 12345}
-                # Check for STRING("n"), COMMA, NUMBER
+                # Inline provider entry: {"n", 12345} or {"i", 99999}
+                # Only extract NPC providers (type "n")
                 j = i + 1
                 if (j + 2 < length and
                     tokens[j][0] == TOK_STRING and tokens[j][1] == 'n' and
@@ -535,17 +540,17 @@ def scan_providers(tokens, pos, array_npcs):
                         npc_ids.append(int(tokens[j + 2][1]))
                     except ValueError:
                         pass
-                # Skip to closing }
-                while i < length:
-                    if tokens[i][0] == TOK_RBRACE:
-                        depth -= 1
-                        i += 1
-                        break
-                    elif tokens[i][0] == TOK_LBRACE:
-                        depth += 1
-                        i += 1
-                    else:
-                        i += 1
+                # Skip to closing } (start at i + 1 to avoid re-counting the opening brace)
+                sub_depth = 1
+                j = i + 1
+                while j < length and sub_depth > 0:
+                    if tokens[j][0] == TOK_LBRACE:
+                        sub_depth += 1
+                    elif tokens[j][0] == TOK_RBRACE:
+                        sub_depth -= 1
+                    j += 1
+                i = j
+                depth = 1  # back at outer level
             else:
                 i += 1
         elif depth == 1 and tokens[i][0] == TOK_IDENT and tokens[i][1] == 'a':
