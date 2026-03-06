@@ -20,7 +20,8 @@ Please note that **Overachiever2** is currently in active development. While it 
   * **Full Criteria Listing:** Shows all requirements/criteria directly on the tooltip.
   * **Series:** Displays the entire series of related achievements in one view.
   * **Parent achievements:** Display its parent achievements.
-  * **Chat Link Support:** These enhanced tooltips also work when you hover over achievement links in the chat window.
+  * **Tracked Achievement Tooltips:** Added tooltip support to achievements currently being tracked.
+  * **Chat Link Tooltips:** These enhanced tooltips also work for achievement links in the chat window.
 * **New Context Menus**
   * Right-click any achievement to reveal a new actions menu.
   * Instantly link to chat, add to your Watch List, or toggle tracking.
