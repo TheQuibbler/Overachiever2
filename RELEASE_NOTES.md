@@ -8,6 +8,9 @@ Instead, if you are authoring a PR for the main branch, add your release note to
 
 [NEW_RELEASE_NOTES.md](./NEW_RELEASE_NOTES.md).
 
+## 0.5.2
+- Minor DB update
+
 ## 0.5.1
 - Resolved an issue where certain NPCs were failing to display in achievement tooltips.
 
