@@ -385,41 +385,55 @@ local function HookMetaCriteria()
 end
 
 -- 7. Tracked Achievement Objective Tooltips (right-side objective tracker)
--- Hook the HeaderButton's OnEnter/OnLeave (ObjectiveTrackerBlockHeaderMixin).
--- The HeaderButton is the invisible button covering the achievement name text.
-local function OnTrackedAchievementHeaderEnter(headerButton)
-    local block = headerButton:GetParent()
-    -- Only handle achievement blocks; quest, bonus objective, and other tracker blocks are ignored.
-    if not block.parentModule or block.parentModule ~= AchievementObjectiveTracker then return end
-
-    local achID = block.id
-    if not achID then return end
-
-    GameTooltip:ClearAllPoints()
-    GameTooltip:SetPoint("TOPRIGHT", block, "TOPLEFT", 0, 0)
-    GameTooltip:SetOwner(block, "ANCHOR_PRESERVE")
-    GameTooltip:SetAchievementByID(achID)
-    GameTooltip:Show()
-end
-
-local function OnTrackedAchievementHeaderLeave(headerButton)
-    local block = headerButton:GetParent()
-    if not block.parentModule or block.parentModule ~= AchievementObjectiveTracker then return end
-    GameTooltip:Hide()
-end
-
+-- Override OnBlockHeaderEnter/Leave on the AchievementObjectiveTracker module instance.
+-- These are empty stub methods on the base ObjectiveTrackerModuleMixin, designed to be overridden.
 local function HookTrackedAchievements()
-    if ObjectiveTrackerBlockHeaderMixin then
-        hooksecurefunc(ObjectiveTrackerBlockHeaderMixin, "OnEnter", OnTrackedAchievementHeaderEnter)
-        hooksecurefunc(ObjectiveTrackerBlockHeaderMixin, "OnLeave", OnTrackedAchievementHeaderLeave)
+    if not AchievementObjectiveTracker then return end
+
+    AchievementObjectiveTracker.OnBlockHeaderEnter = function(self, block)
+        local achID = block.id
+        if not achID then return end
+
+        GameTooltip:ClearAllPoints()
+        GameTooltip:SetPoint("TOPRIGHT", block, "TOPLEFT", 0, 0)
+        GameTooltip:SetOwner(block, "ANCHOR_PRESERVE")
+        GameTooltip:SetAchievementByID(achID)
+        GameTooltip:Show()
+    end
+
+    AchievementObjectiveTracker.OnBlockHeaderLeave = function(self, block)
+        GameTooltip:Hide()
     end
 end
 
+-- 8. Chat Hyperlink Tooltips (achievement links only)
+local function OnChatHyperlinkEnter(chatFrame, link)
+    local achID = link:match("^achievement:(%d+)")
+    if not achID then return end
+    GameTooltip:SetOwner(chatFrame, "ANCHOR_CURSOR")
+    GameTooltip:SetAchievementByID(tonumber(achID))
+    GameTooltip:Show()
+end
+
+local function OnChatHyperlinkLeave()
+    GameTooltip:Hide()
+end
+
+local function HookChatHyperlinks()
+    for i = 1, NUM_CHAT_WINDOWS do
+        local chatFrame = _G["ChatFrame" .. i]
+        if chatFrame then
+            chatFrame:HookScript("OnHyperlinkEnter", OnChatHyperlinkEnter)
+            chatFrame:HookScript("OnHyperlinkLeave", OnChatHyperlinkLeave)
+        end
+    end
+end
+
+-- Lastly. Hook everything
 local function HookAllAchievementUI()
     HookCategoryTooltips()
     HookAchievementList()
     HookMetaCriteria()
-    HookTrackedAchievements()
 end
 
 if C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI") then
@@ -434,3 +448,7 @@ else
         end
     end)
 end
+
+-- These don't depend on Blizzard_AchievementUI, hook immediately
+HookTrackedAchievements()
+HookChatHyperlinks()

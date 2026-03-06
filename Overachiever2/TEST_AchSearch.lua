@@ -226,5 +226,5 @@ function Overachiever2_TestSearch_Performance()
     PrintResult(string.format("Criteria search 'exalted': %d results in %.2fms", #results, critTime))
 end
 
-print("|cff00ff00Overachiever2 Search Engine Test Loaded!|r")
-print("Type |cffffffff/run Overachiever2_TestSearch_Lists()|r to test")
+-- print("|cff00ff00Overachiever2 Search Engine Test Loaded!|r")
+-- print("Type |cffffffff/run Overachiever2_TestSearch_Lists()|r to test")
