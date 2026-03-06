@@ -391,9 +391,9 @@ local function HookTrackedAchievements()
     if not AchievementObjectiveTracker then return end
 
     AchievementObjectiveTracker.OnBlockHeaderEnter = function(self, block)
+        if not Overachiever2_Settings.EnableAchievementTooltip then return end
         local achID = block.id
         if not achID then return end
-
         GameTooltip:ClearAllPoints()
         GameTooltip:SetPoint("TOPRIGHT", block, "TOPLEFT", 0, 0)
         GameTooltip:SetOwner(block, "ANCHOR_PRESERVE")
@@ -402,12 +402,14 @@ local function HookTrackedAchievements()
     end
 
     AchievementObjectiveTracker.OnBlockHeaderLeave = function(self, block)
+        if not Overachiever2_Settings.EnableAchievementTooltip then return end
         GameTooltip:Hide()
     end
 end
 
 -- 8. Chat Hyperlink Tooltips (achievement links only)
 local function OnChatHyperlinkEnter(chatFrame, link)
+    if not Overachiever2_Settings.EnableAchievementTooltip then return end
     local achID = link:match("^achievement:(%d+)")
     if not achID then return end
     GameTooltip:SetOwner(chatFrame, "ANCHOR_CURSOR")
@@ -416,6 +418,7 @@ local function OnChatHyperlinkEnter(chatFrame, link)
 end
 
 local function OnChatHyperlinkLeave()
+    if not Overachiever2_Settings.EnableAchievementTooltip then return end
     GameTooltip:Hide()
 end
 
