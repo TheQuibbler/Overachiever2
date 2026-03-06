@@ -8,6 +8,11 @@ Instead, if you are authoring a PR for the main branch, add your release note to
 
 [NEW_RELEASE_NOTES.md](./NEW_RELEASE_NOTES.md).
 
+## 0.5.3
+- Fixed an intermittent issue where tooltips would not appear when hovering over tracked achievements.
+- Resolved a bug that prevented tooltips from displaying when mousing over achievement links in the chat.
+- Fixed an issue where tracked achievements ignored the "Enable achievement tooltip" option.
+
 ## 0.5.2
 - Minor DB update
 
