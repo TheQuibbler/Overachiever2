@@ -10,7 +10,6 @@ local addonName, ns = ...
 
 -- Cached values kept up-to-date by hooks so callers can read the selection even when Blizzard getter functions are unavailable or return nil/0.
 local cachedCategoryID
-local cachedAchievementID
 
 -- ==========================================================================
 -- Cache update handlers (hooked to Blizzard UI element selection)
@@ -26,18 +25,9 @@ local function CacheCategorySelection(elementData)
     end
     if newID and newID ~= cachedCategoryID then
         cachedCategoryID = newID
-        cachedAchievementID = nil
     end
 end
 
--- Update cached achievement selection. Store a numeric id or clear the cache when no valid selection is present.
-local function CacheAchievementSelection(elementData)
-    if elementData and elementData.id and elementData.id ~= 0 then
-        cachedAchievementID = elementData.id
-    else
-        cachedAchievementID = nil
-    end
-end
 
 -- ==========================================================================
 -- Getters: prefer cached values, fall back to guarded Blizzard getters
@@ -56,15 +46,10 @@ local function GetCategoryID()
 end
 
 local function GetAchievementID()
-    if cachedAchievementID then
-        return cachedAchievementID
-    end
-
     if AchievementFrameAchievements and AchievementFrameAchievements.GetSelectedAchievement then
         local ok, id = pcall(AchievementFrameAchievements.GetSelectedAchievement, AchievementFrameAchievements)
         if ok and id and id ~= 0 then
-            cachedAchievementID = id
-            return cachedAchievementID
+            return id
         end
     end
     return nil
@@ -125,7 +110,6 @@ local function InstallHooks()
     AchievementFrame:HookScript("OnHide", OnAchievementHide)
 
     hooksecurefunc("AchievementFrameCategories_SelectElementData", CacheCategorySelection)
-    hooksecurefunc("AchievementFrameAchievements_SelectElementData", CacheAchievementSelection)
 end
 
 -- ==========================================================================
