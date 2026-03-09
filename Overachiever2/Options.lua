@@ -17,6 +17,9 @@ local function SetDefaultSettings()
     if Overachiever2_Settings.EnableAchievementTooltip == nil then
         Overachiever2_Settings.EnableAchievementTooltip = true
     end
+    if Overachiever2_Settings.DisableSessionState == nil then
+        Overachiever2_Settings.DisableSessionState = false
+    end
 end
 
 -- Modern Settings API (Retail / 10.0+)
@@ -46,6 +49,20 @@ local function RegisterOptions()
 
         local setting = Settings.RegisterProxySetting(category, "Overachiever2_" .. variable,
             Settings.VarType.Boolean, name, Overachiever2_Settings.EnableAchievementTooltip,
+            function() return Overachiever2_Settings[variable] end,
+            function(value) Overachiever2_Settings[variable] = value end)
+
+        Settings.CreateCheckbox(category, setting, tooltip)
+    end
+
+    -- Disable Session State checkbox
+    do
+        local variable = "DisableSessionState"
+        local name = ns.L["OPT_DISABLE_SESSION_TITLE"]
+        local tooltip = ns.L["OPT_DISABLE_SESSION_DESC"]
+
+        local setting = Settings.RegisterProxySetting(category, "Overachiever2_" .. variable,
+            Settings.VarType.Boolean, name, Overachiever2_Settings.DisableSessionState,
             function() return Overachiever2_Settings[variable] end,
             function(value) Overachiever2_Settings[variable] = value end)
 

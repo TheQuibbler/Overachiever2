@@ -37,6 +37,9 @@ L["OPT_NPC_TOOLTIP_DESC"] = "Show achievement progress lines when hovering over 
 L["OPT_ACH_TOOLTIP_TITLE"] = "Enable achievement tooltip"
 L["OPT_ACH_TOOLTIP_DESC"] = "Show enhanced achievement tooltips with additional details."
 
+L["OPT_DISABLE_SESSION_TITLE"] = "Disable Session State"
+L["OPT_DISABLE_SESSION_DESC"] = "When enabled, the addon will not restore the last viewed category/achievement when the Achievement Frame is reopened."
+
 L["SERIESTIP"] = "Part of a series"
 L["META_ACHIEVEMENT"] = "Meta-achievement"
 
@@ -73,7 +76,10 @@ if locale == "koKR" then
 
     L["OPT_ACH_TOOLTIP_TITLE"] = "업적 툴팁 활성화"
     L["OPT_ACH_TOOLTIP_DESC"] = "추가 정보가 포함된 향상된 업적 툴팁을 표시합니다."
-
+    
+    L["OPT_DISABLE_SESSION_TITLE"] = "세션 상태 비활성화"
+    L["OPT_DISABLE_SESSION_DESC"] = "활성화하면 애드온이 성과 창을 다시 열 때 마지막으로 본 카테고리/업적을 복원하지 않습니다."
+    
     L["SERIESTIP"] = "업적 세트"
     L["META_ACHIEVEMENT"] = "상위 업적"
 
@@ -97,19 +103,22 @@ if locale == "zhCN" then
     L["SLASH_CMD_REBUILD"] = "/oa rebuild：强制重建成就扫描器缓存。"
     L["SLASH_CMD_DEBUG"] = "/oa debug：切换调试模式（显示提示信息ID）。"
     L["SLASH_CMD_SEARCH"] = "/oa search <查询>：按名称或ID搜索成就（用于调试）。"
-
+    
     L["SCANNER_INIT_MSG"] = "扫描器已通过 %s 初始化（耗时 %.2f 毫秒）。"
     L["SCANNER_REBUILT"] = "成就扫描器缓存已重建。"
-
+    
     L["OPT_DEBUG_TITLE"] = "显示提示信息ID（调试模式）"
     L["OPT_DEBUG_DESC"] = "在提示信息中显示NPC、物品与成就的ID。"
 
     L["OPT_NPC_TOOLTIP_TITLE"] = "启用NPC提示信息"
     L["OPT_NPC_TOOLTIP_DESC"] = "鼠标悬停在NPC上时显示成就进度。"
-
+    
     L["OPT_ACH_TOOLTIP_TITLE"] = "启用成就提示信息"
     L["OPT_ACH_TOOLTIP_DESC"] = "显示包含额外详情的增强成就提示信息。"
-
+    
+    L["OPT_DISABLE_SESSION_TITLE"] = "禁用会话状态"
+    L["OPT_DISABLE_SESSION_DESC"] = "启用后，插件在重新打开成就面板时不会恢复上次查看的分类/成就。"
+    
     L["SERIESTIP"] = "系列成就的一部分"
     L["META_ACHIEVEMENT"] = "综合成就"
 
@@ -145,7 +154,10 @@ if locale == "zhTW" then
 
     L["OPT_ACH_TOOLTIP_TITLE"] = "啟用成就提示資訊"
     L["OPT_ACH_TOOLTIP_DESC"] = "顯示包含額外詳情的增強成就提示資訊。"
-
+    
+    L["OPT_DISABLE_SESSION_TITLE"] = "停用會話狀態"
+    L["OPT_DISABLE_SESSION_DESC"] = "啟用後，插件在重新打開成就面板時不會還原上次查看的分類/成就。"
+    
     L["SERIESTIP"] = "系列成就的一部分"
     L["META_ACHIEVEMENT"] = "綜合成就"
 
@@ -154,6 +166,7 @@ if locale == "zhTW" then
     L["CTXMENU_WATCH_REMOVE"] = "從關注列表移除"
     L["CTXMENU_TRACK"] = "追蹤成就"
     L["CTXMENU_UNTRACK"] = "取消追蹤成就"
+    
 end
 
 -- ============================================================================
@@ -181,6 +194,9 @@ if locale == "deDE" then
 
     L["OPT_ACH_TOOLTIP_TITLE"] = "Erfolgs-Tooltip aktivieren"
     L["OPT_ACH_TOOLTIP_DESC"] = "Erweiterte Erfolgs-Tooltips mit zusätzlichen Details anzeigen."
+    
+    L["OPT_DISABLE_SESSION_TITLE"] = "Sitzungszustand deaktivieren"
+    L["OPT_DISABLE_SESSION_DESC"] = "Wenn aktiviert, stellt das Addon beim erneuten Öffnen des Erfolgsfensters nicht die zuletzt angezeigte Kategorie/Erfolg wieder her."
 
     L["SERIESTIP"] = "Teil einer Serie"
     L["META_ACHIEVEMENT"] = "Meta-Erfolg"
@@ -217,6 +233,9 @@ if locale == "frFR" then
 
     L["OPT_ACH_TOOLTIP_TITLE"] = "Activer l'infobulle de haut fait"
     L["OPT_ACH_TOOLTIP_DESC"] = "Afficher des infobulles de hauts faits améliorées avec des détails supplémentaires."
+    
+    L["OPT_DISABLE_SESSION_TITLE"] = "Désactiver l'état de session"
+    L["OPT_DISABLE_SESSION_DESC"] = "Lorsqu'activé, l'addon ne restaurera pas la dernière catégorie/haut fait affichée lors de la réouverture de la fenêtre des hauts faits."
 
     L["SERIESTIP"] = "Fait partie d'une série"
     L["META_ACHIEVEMENT"] = "Méta haut fait"
@@ -254,6 +273,9 @@ if locale == "ruRU" then
     L["OPT_ACH_TOOLTIP_TITLE"] = "Включить подсказки достижений"
     L["OPT_ACH_TOOLTIP_DESC"] = "Показывать расширенные подсказки достижений с дополнительными деталями."
 
+    L["OPT_DISABLE_SESSION_TITLE"] = "Отключить состояние сессии"
+    L["OPT_DISABLE_SESSION_DESC"] = "При включении аддон не будет восстанавливать последнюю просматриваемую категорию/достижение при повторном открытии окна достижений."
+    
     L["SERIESTIP"] = "Часть серии"
     L["META_ACHIEVEMENT"] = "Мета-достижение"
 
@@ -290,9 +312,12 @@ if locale == "esES" or locale == "esMX" then
     L["OPT_ACH_TOOLTIP_TITLE"] = "Activar información emergente de logros"
     L["OPT_ACH_TOOLTIP_DESC"] = "Mostrar información emergente mejorada de logros con detalles adicionales."
 
+    L["OPT_DISABLE_SESSION_TITLE"] = "Desactivar estado de sesión"
+    L["OPT_DISABLE_SESSION_DESC"] = "Cuando está activado, el addon no restaurará la última categoría/logro visto al reabrir el panel de logros."
+    
     L["SERIESTIP"] = "Parte de una serie"
     L["META_ACHIEVEMENT"] = "Meta-logro"
-
+    
     L["CTXMENU_LINK_CHAT"] = "Enlazar en el chat"
     L["CTXMENU_WATCH_ADD"] = "Añadir a lista de seguimiento"
     L["CTXMENU_WATCH_REMOVE"] = "Quitar de lista de seguimiento"

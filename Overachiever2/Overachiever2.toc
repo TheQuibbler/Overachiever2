@@ -16,6 +16,7 @@ Scanner.lua
 AchSearch.lua
 Options.lua
 Core.lua
+SessionState.lua
 Tooltips.lua
 ContextMenu.lua
 
